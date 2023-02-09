@@ -2,46 +2,42 @@
   <div class="wrapper">
     <div class="form-container">
       <h1>Registrarse</h1>
-      <form action="/registrar" class="form-cita" method="POST">
+      <vee-form
+        action="/register"
+        class="form-cita"
+        method="POST"
+        :validation-schema="registerSchema"
+        @submit="register"
+      >
         <div class="inputBox">
-          <input type="text" id="nombre" name="nombre" required />
+          <vee-field type="text" id="name" name="name" />
           <span>Nombre</span>
         </div>
+        <ErrorMessage name="name" class="text-red-600"></ErrorMessage>
         <div class="inputBox">
-          <input type="number" id="telefono" name="telefono" required />
+          <vee-field type="number" id="phone" name="phone" />
           <span>Telefono</span>
         </div>
+        <ErrorMessage name="phone" class="text-red-600"></ErrorMessage>
         <div class="inputBox">
-          <input
-            type="text"
-            id="email"
-            name="email"
-            autocomplete="email"
-            required
-          />
+          <vee-field type="text" id="email" name="email" autocomplete="email" />
           <span>Email</span>
         </div>
+        <ErrorMessage name="email" class="text-red-600"></ErrorMessage>
         <div class="inputBox">
-          <input
-            type="password"
-            id="password"
-            name="password"
-            autocomplete="new-password"
-            required
-          />
+          <vee-field type="password" id="password" name="password" />
           <span>Contraseña</span>
           <div id="togglePass" onclick="togglePass()">
             <i class="fa-regular fa-eye toggle-seg-num"></i>
             <i class="fa-regular fa-eye-slash"></i>
           </div>
         </div>
+        <ErrorMessage name="password" class="text-red-600"></ErrorMessage>
         <div class="inputBox">
-          <input
+          <vee-field
             type="password"
-            id="passwordConf"
-            name="passwordConf"
-            autocomplete="current-password"
-            required
+            id="confirmPassword"
+            name="confirmPassword"
           />
           <span>Confirmar contraseña</span>
           <div id="toggleConfPass" onclick="toggleConfPass()">
@@ -49,6 +45,23 @@
             <i class="fa-regular fa-eye-slash"></i>
           </div>
         </div>
+        <ErrorMessage
+          name="confirmPassword"
+          class="text-red-600"
+        ></ErrorMessage>
+        <div class="mb-3 pl-6">
+          <vee-field
+            type="checkbox"
+            name="tos"
+            id="tos"
+            value="1"
+            class="w-4 h-4 float-left -ml-6 mt-1 rounded"
+          />
+          <label for="tos" class="inline-block"
+            >Acepto los <a href="#tos">terminos del servicio.</a></label
+          >
+        </div>
+        <ErrorMessage name="tos" class="text-red-600"></ErrorMessage>
         <div class="errors">
           <p>ERROR</p>
         </div>
@@ -57,7 +70,7 @@
             Registrarse
           </button>
         </div>
-      </form>
+      </vee-form>
     </div>
   </div>
 </template>
@@ -65,5 +78,22 @@
 <script>
 export default {
   name: "RegisterForm",
+  data() {
+    return {
+      registerSchema: {
+        name: "required|alphaSpaces|min:3|max:100",
+        phone: "required|integer|min:10|max:10",
+        email: "required|email",
+        password: "required|min:8",
+        confirmPassword: "confirmed:@password",
+        tos: "required",
+      },
+    };
+  },
+  methods: {
+    register(values) {
+      console.log(values);
+    },
+  },
 };
 </script>
