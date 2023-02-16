@@ -10,65 +10,103 @@
         @submit="register"
       >
         <!-- Name -->
-        <div class="inputBox">
-          <vee-field type="text" id="name" name="name" />
-          <span>Nombre</span>
+        <div class="relative my-2 w-full">
+          <label class="block text-sky-600 text-lg">Nombre</label>
+          <div
+            class="relative my-1.5 flex items-center w-full px-3 border border-solid border-slate-500 rounded"
+          >
+            <vee-field
+              type="text"
+              name="name"
+              placeholder="Nombre..."
+              class="leading-8 py-2.5 focus:outline-none w-full"
+              autocomplete="off"
+            />
+          </div>
+          <ErrorMessage name="name" class="text-red-600"></ErrorMessage>
         </div>
-        <ErrorMessage name="name" class="text-red-600"></ErrorMessage>
 
         <!-- Phone -->
-        <div class="inputBox">
-          <vee-field type="number" id="phone" name="phone" />
-          <span>Telefono</span>
+        <div class="relative my-2 w-full">
+          <label class="block text-sky-600 text-lg">Teléfono</label>
+          <div
+            class="relative my-1.5 flex items-center w-full px-3 border border-solid border-slate-500 rounded"
+          >
+            <vee-field
+              type="number"
+              name="phone"
+              placeholder="Teléfono..."
+              class="leading-8 py-2.5 focus:outline-none w-full"
+              autocomplete="email"
+            />
+          </div>
+          <ErrorMessage name="phone" class="text-red-600"></ErrorMessage>
         </div>
-        <ErrorMessage name="phone" class="text-red-600"></ErrorMessage>
 
         <!-- Email -->
-        <div class="inputBox">
-          <vee-field type="text" id="email" name="email" autocomplete="email" />
-          <span>Email</span>
+        <div class="relative my-2 w-full">
+          <label class="block text-sky-600 text-lg">Correo electrónico</label>
+          <div
+            class="relative my-1.5 flex items-center w-full px-3 border border-solid border-slate-500 rounded"
+          >
+            <vee-field
+              type="email"
+              name="email"
+              placeholder="Correo electrónico..."
+              class="leading-8 py-2.5 focus:outline-none w-full"
+              autocomplete="email"
+            />
+          </div>
+          <ErrorMessage name="email" class="text-red-600"></ErrorMessage>
         </div>
-        <ErrorMessage name="email" class="text-red-600"></ErrorMessage>
 
         <!-- Password -->
-        <div class="inputBox">
-          <vee-field
-            type="password"
-            id="password"
-            name="password"
-            :bails="false"
-            v-slot="{ field, errors }"
-          >
-            <input type="password" v-bind="field" />
+        <div class="relative my-2 w-full">
+          <label class="block text-sky-600 text-lg">Contraseña</label>
+          <vee-field name="password" :bails="false" v-slot="{ field, errors }">
+            <div
+              class="relative my-1.5 flex items-center w-full px-3 border border-solid border-slate-500 rounded"
+            >
+              <input
+                :type="passFieldType"
+                v-bind="field"
+                placeholder="Contraseña..."
+                class="leading-8 py-2.5 focus:outline-none w-full"
+              />
+              <div id="togglePass" @click="togglePass()">
+                <i class="fa-regular fa-eye toggle-seg-num"></i>
+                <i class="fa-regular fa-eye-slash"></i>
+              </div>
+            </div>
             <div class="text-red-600" v-for="error in errors" :key="error">
               {{ error }}
             </div>
           </vee-field>
-          <span>Contraseña</span>
-          <div id="togglePass" onclick="togglePass()">
-            <i class="fa-regular fa-eye toggle-seg-num"></i>
-            <i class="fa-regular fa-eye-slash"></i>
-          </div>
         </div>
-        <ErrorMessage name="password" class="text-red-600"></ErrorMessage>
 
         <!-- Confirm Password -->
-        <div class="inputBox">
-          <vee-field
-            type="password"
-            id="confirmPassword"
-            name="confirmPassword"
-          />
-          <span>Confirmar contraseña</span>
-          <div id="toggleConfPass" onclick="toggleConfPass()">
-            <i class="fa-regular fa-eye toggle-seg-num"></i>
-            <i class="fa-regular fa-eye-slash"></i>
+        <div class="relative my-2 w-full">
+          <label class="block text-sky-600 text-lg">Confirmar contraseña</label>
+          <div
+            class="relative my-1.5 flex items-center w-full px-3 border border-solid border-slate-500 rounded"
+          >
+            <vee-field
+              :type="confPassFieldType"
+              name="confirmPassword"
+              placeholder="Confirmar contraseña..."
+              class="leading-8 py-2.5 focus:outline-none w-full"
+            />
+
+            <div id="toggleConfPass" @click="togglePassConf()">
+              <i class="fa-regular fa-eye toggle-seg-num"></i>
+              <i class="fa-regular fa-eye-slash"></i>
+            </div>
           </div>
+          <ErrorMessage
+            name="confirmPassword"
+            class="text-red-600"
+          ></ErrorMessage>
         </div>
-        <ErrorMessage
-          name="confirmPassword"
-          class="text-red-600"
-        ></ErrorMessage>
 
         <!-- ToS -->
         <div class="mb-3 pl-6">
@@ -80,7 +118,10 @@
             class="w-4 h-4 float-left -ml-6 mt-1 rounded"
           />
           <label for="tos" class="inline-block"
-            >Acepto los <a href="#tos">terminos del servicio.</a></label
+            >Acepto los
+            <a href="#tos" class="text-sky-700"
+              >terminos del servicio.</a
+            ></label
           >
         </div>
         <ErrorMessage name="tos" class="text-red-600"></ErrorMessage>
@@ -90,7 +131,7 @@
           <button type="submit" id="btnRegistrar" class="btn-submit">
             Registrarse
           </button>
-          <div class="text-red-600"><span>Error</span></div>
+          <div class="text-red-600 py-4"><span>Error</span></div>
         </div>
       </vee-form>
     </div>
@@ -102,6 +143,8 @@ export default {
   name: "RegisterForm",
   data() {
     return {
+      passFieldType: "password",
+      confPassFieldType: "password",
       registerSchema: {
         name: "required|alphaSpaces|min:3|max:100",
         phone: "required|integer|min:10|max:10",
@@ -115,6 +158,14 @@ export default {
   methods: {
     register(values) {
       console.log(values);
+    },
+    togglePass() {
+      this.passFieldType =
+        this.passFieldType === "password" ? "text" : "password";
+    },
+    togglePassConf() {
+      this.confPassFieldType =
+        this.confPassFieldType === "text" ? "password" : "text";
     },
   },
 };

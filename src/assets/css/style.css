@@ -151,7 +151,7 @@ img {
 .form-container h1 {
   min-width: 80%;
   text-align: center;
-  margin: 1em 0 1.1em;
+  margin-bottom: 1.1em;
   padding-bottom: 0.4em;
   border-bottom: 2px solid rgba(0, 0, 0, 0.5);
   font-size: 2em;

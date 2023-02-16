@@ -1,8 +1,8 @@
 <template>
   <div
+    v-if="modalVisibility"
     class="fixed z-10 inset-0 overflow-y-auto"
     id="modal"
-    :class="hiddenClass"
   >
     <div
       class="flex items-center justify-center min-h-screen pt-4 px-4 pb-16 text-center sm:block sm:p-0"
@@ -95,9 +95,6 @@ export default {
   },
   computed: {
     ...mapWritableState(useAuthModalStore, { modalVisibility: "isOpen" }),
-    hiddenClass() {
-      return !this.modalVisibility ? "hidden" : "";
-    },
   },
 };
 </script>
