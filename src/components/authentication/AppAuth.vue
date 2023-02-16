@@ -45,7 +45,7 @@
                   'hover:text-white text-white bg-blue-600': tab === 'login',
                   'hover:text-blue-600': tab === 'register',
                 }"
-                >Login</a
+                >Iniciar Sesión</a
               >
             </li>
             <li class="flex-auto text-center">
@@ -57,7 +57,7 @@
                   'hover:text-white text-white bg-blue-600': tab === 'register',
                   'hover:text-blue-600': tab === 'login',
                 }"
-                >Register</a
+                >Registrarse</a
               >
             </li>
           </ul>
