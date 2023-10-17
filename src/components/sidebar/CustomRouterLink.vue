@@ -1,15 +1,23 @@
 <template>
-  <div @click="toggleNav">
-    <router-link :to="to" tabindex="0">{{ text }}</router-link>
-  </div>
+  <router-link :to="to" tabindex="0" @click="scrollToTop(), toggleNav()">
+    <svg v-if="svg">
+      <use :href="hrefSvg" />
+    </svg>
+    {{ text }}
+  </router-link>
 </template>
 
 <script>
 import { mapWritableState } from "pinia";
-import useSidebarStore from "@/stores/sidebar";
+import useGeneralVariablesStore from "@/stores/generalVariables";
 
 export default {
   name: "CustomRouterLink",
+  data() {
+    return {
+      hrefSvg: `src/assets/icons/icons.svg#${this.svgRef}`,
+    };
+  },
   props: {
     to: {
       type: String,
@@ -19,14 +27,22 @@ export default {
       type: String,
       required: true,
     },
+    svg: {
+      type: String,
+    },
+    svgRef: {
+      type: String,
+    },
   },
   computed: {
-    ...mapWritableState(useSidebarStore, { sidebarOpen: "isOpen" }),
+    ...mapWritableState(useGeneralVariablesStore, ["sidebarIsOpen"]),
   },
   methods: {
     toggleNav() {
-      console.log("togglenav");
-      this.sidebarOpen = !this.sidebarOpen;
+      this.sidebarIsOpen = !this.sidebarIsOpen;
+    },
+    scrollToTop() {
+      document.getElementById("divToScroll").scrollIntoView();
     },
   },
 };

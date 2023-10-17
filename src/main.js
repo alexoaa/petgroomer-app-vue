@@ -5,7 +5,7 @@ import App from "./App.vue";
 import router from "./router";
 import VeeValidatePlugin from "@/includes/validation";
 
-import "./assets/css/base.css";
+// import "./assets/css/base.css";
 
 const app = createApp(App);
 

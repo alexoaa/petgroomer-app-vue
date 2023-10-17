@@ -12,10 +12,17 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@splidejs/vue-splide": "^0.6.12",
+    "@uvarov.frontend/vanilla-calendar": "^2.6.0",
     "@vee-validate/rules": "^4.7.4",
+    "@vueuse/components": "^10.2.0",
+    "@vueuse/core": "^10.2.0",
+    "axios": "^1.4.0",
+    "lottie-web": "^5.12.2",
     "pinia": "^2.0.28",
     "vee-validate": "^4.7.4",
     "vue": "^3.2.45",
+    "vue-click-outside": "^1.1.0",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {

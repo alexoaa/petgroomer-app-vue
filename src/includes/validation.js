@@ -37,18 +37,18 @@ export default {
     configure({
       generateMessage: (ctx) => {
         const errorMessages = {
-          required: `The ${ctx.field} is required.`,
-          min: `The ${ctx.field} is too short.`,
-          max: `The ${ctx.field} is too long.`,
-          alphaSpaces: `The ${ctx.field} may only contain alphabetic characters and spaces.`,
-          alphaDash: `The ${ctx.field} may only contain alphabetic characters numbers, dashes, or underscores.`,
-          email: `The ${ctx.field} must be a valid email.`,
+          required: `*Este campo es requerido.`,
+          min: `*El campo es muy corto.`,
+          max: `*El campo es muy largo.`,
+          alphaSpaces: `*El campo solo puede contener caracteres alfabéticos y espacios.`,
+          alphaDash: `*The ${ctx.field} may only contain alphabetic characters numbers, dashes, or underscores.`,
+          email: `*El ${ctx.field} debe ser un email válido.`,
           min_value: `The ${ctx.field} is too low.`,
           max_value: `The ${ctx.field} is too high.`,
-          integer: `The value needs to be a number.`,
-          excluded: `The password typed is not allowed. Try to add another password.`,
-          passwords_mismatch: `The passwords do not match.`,
-          tos: `You must accept the Terms of Service.`,
+          integer: `*El valor del campo debe ser numérico.`,
+          excluded: `*The password typed is not allowed. Try to add another password.`,
+          passwords_mismatch: `Las contraseñas no coinciden.`,
+          tos: `*Debes aceptar los terminos y condiciones.`,
         };
 
         const errorMessage = errorMessages[ctx.rule.name]

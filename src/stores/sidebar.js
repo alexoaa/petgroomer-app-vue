@@ -6,5 +6,13 @@ import { defineStore } from "pinia";
 export default defineStore("sidebar", {
   state: () => ({
     isOpen: false,
+    serviciosIsOpen: false,
+    calendarEsteticaIsActive: false,
+    calendarEsteticaIsFirst: false,
   }),
+  actions: {
+    closeServicioSelectSidebar() {
+      this.serviciosIsOpen = !this.serviciosIsOpen;
+    },
+  },
 });

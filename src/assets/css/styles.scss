@@ -1,0 +1,726 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-dark: #2f2f2f;
+  --color-brand: #57bd84;
+  --btn-color: #1e90ff;
+  --blue-color: #3498db;
+
+  //////////////////////
+
+  --main-color: #25292f;
+  --accent-color: #399de7;
+  --text-color: #151d1f;
+  --background-main-color: #f7f3f6;
+
+  --dark-accent-color: #65acc9;
+  --dark-accent-color-100: #3282a1;
+  --dark-text-color: #f7f3f6;
+
+  --green-color: #4cd137;
+  --light-gray-color: #cbcfd8;
+  --light-gray-color-100: #dee0e6;
+  --red-color: #dc2626;
+  --red-color-100: #be1818;
+  // LIGHTER COLORS
+  --lighter-main-color: #4c4e52;
+  --lighter-main-color-100: #3a4047;
+
+  --font-fam: "NotoSans", sans-serif;
+  --rad: 0.5rem;
+}
+
+@font-face {
+  font-family: "NotoSans";
+  src: url("@/assets/fonts/NotoSans-Light.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: "NotoSans";
+  src: url("@/assets/fonts/NotoSans-Regular.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "NotoSans";
+  src: url("@/assets/fonts/NotoSans-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "NotoSans";
+  src: url("@/assets/fonts/NotoSans-Bold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: "NotoSans";
+  src: url("@/assets/fonts/NotoSans-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+@font-face {
+  font-family: "NotoSans";
+  src: url("@/assets/fonts/NotoSans-Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-fam);
+  font-weight: 300;
+  color: var(--text-color);
+}
+
+html,
+body {
+  overflow-x: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-main-color);
+}
+
+header {
+  position: relative;
+}
+
+footer {
+}
+
+a {
+  :visited,
+  :focus,
+  :active,
+  :link {
+    text-decoration: none;
+    outline: 0;
+  }
+  color: currentColor;
+  transition: 200ms ease-in-out;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+img {
+  vertical-align: middle;
+  height: auto;
+  width: 100%;
+}
+
+/* BUTTONS */
+.btn-primary {
+  display: block;
+  width: 100%;
+  background-color: var(--main-color);
+  border-radius: 6px;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-align: center;
+  color: var(--dark-text-color);
+  padding: 16px 30px;
+  margin: 18px 0;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--dark-accent-color);
+    box-shadow: 0px 0px 7px 2px var(--lighter-main-color);
+    scale: 1.02;
+  }
+  &:active {
+    scale: 1;
+  }
+}
+.btn-primary-dark {
+  display: block;
+  width: 100%;
+  background-color: var(--main-color);
+  border-radius: 6px;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-align: center;
+  color: var(--dark-text-color);
+  padding: 16px 30px;
+  margin: 18px 0;
+  cursor: pointer;
+  border: 2px solid var(--main-color);
+  &:hover {
+    box-shadow: 0 5px 15px var(--main-color);
+    translate: 0px -5px;
+  }
+  &:active {
+    box-shadow: 0 2px 10px var(--main-color);
+    translate: 0px 0px;
+  }
+}
+.btn-secondary {
+  display: block;
+  width: 100%;
+  border: 2px solid var(--dark-accent-color);
+  background-color: var(--dark-accent-color);
+  color: var(--dark-text-color);
+  border-radius: 6px;
+  font-size: 1.1em;
+  font-weight: bold;
+  text-align: center;
+  padding: 16px 30px;
+  margin: 18px 0;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--main-color);
+    color: var(--dark-accent-color);
+    box-shadow: 0px 0px 7px 2px var(--lighter-main-color);
+    scale: 1.02;
+  }
+  &:active {
+    scale: 1;
+  }
+}
+.btn-terciary {
+  display: inline-block;
+  font-size: 1.2em;
+  line-height: 36px;
+  color: var(--text-color);
+  padding: 0 30px;
+  cursor: pointer;
+  margin: 15px 0;
+  height: 40px;
+  transition: color 200ms ease-in-out;
+  border-bottom: 1px solid var(--text-color);
+  &:hover {
+    border-bottom: 2px solid var(--text-color);
+    font-weight: bold;
+  }
+}
+.btn-terciary-small {
+  background-color: var(--light-gray-color-100);
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  line-height: 36px;
+  padding: 5px 20px;
+  color: var(--text-color);
+  font-weight: bold;
+  display: inline-block;
+  transition: background-color 200ms ease-in-out;
+  &:hover {
+    background-color: var(--light-gray-color);
+  }
+}
+.btn-submit {
+  display: inline-block;
+  background-color: var(--dark-accent-color) !important;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.2em;
+  line-height: 36px;
+  color: var(--dark-text-color);
+  padding: 10px 30px;
+  cursor: pointer;
+  font-weight: bold;
+  margin: 15px 0;
+  width: 100%;
+  transition: background-color 200ms ease-in-out;
+  &:hover {
+    background-color: var(--dark-accent-color-100) !important;
+  }
+}
+.btn-submit-small {
+  background-color: var(--dark-accent-color);
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  line-height: 36px;
+  color: var(--dark-text-color);
+  padding: 5px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 200ms ease-in-out;
+  &:hover {
+    background-color: var(--dark-accent-color-100);
+  }
+}
+
+/** STYLES FOR APPOINTMENT FORM */
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 30px;
+  margin-bottom: 40px;
+  h1 {
+    min-width: 80%;
+    text-align: center;
+    margin-bottom: 1.1em;
+    padding-bottom: 0.4em;
+    border-bottom: 2px solid var(--lighter-main-color);
+    font-size: 2em;
+    font-weight: bold;
+  }
+  .form-appointment {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+    max-width: 400px;
+    padding: 0 20px;
+  }
+  .appointment-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0 40px 30px;
+    position: relative;
+    max-width: 400px;
+
+    h2 {
+      font-size: 2em;
+    }
+    .fields-container {
+      width: 100%;
+      /** INPUT STYLE */
+      .inputBox {
+        position: relative;
+        width: 300px;
+        margin: 0.8em 0;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        border: 1px solid var(--main-color);
+        border-radius: 5px;
+
+        input {
+          background: var(--background-main-color);
+          display: block;
+          padding: 15px;
+          font-size: 1em;
+          line-height: 30px;
+          width: 100%;
+          border: none;
+          border-radius: 5px;
+          &:focus {
+            outline: none;
+          }
+
+          &:valid ~ span,
+          &:focus ~ span {
+            color: var(--dark-accent-color);
+            transform: translateX(2px) translateY(-29px);
+            font-size: 0.9em;
+
+            padding: 0 10px;
+            background: var(--background-main-color);
+            border-left: 1px solid var(--dark-accent-color);
+            border-right: 1px solid var(--dark-accent-color);
+            font-weight: 600;
+          }
+        }
+
+        span {
+          position: absolute;
+          left: 10px;
+          padding: 10px;
+          pointer-events: none;
+          font-size: 1em;
+          letter-spacing: 0.4px;
+          color: var(--text-color);
+          text-transform: uppercase;
+          transition: all 0.5s;
+        }
+        div {
+          margin-right: 10px;
+        }
+      }
+    }
+    .add-number {
+      position: relative;
+      width: 300px;
+      display: flex;
+      justify-content: center;
+      margin: 0.8em 0;
+      button {
+        width: 100%;
+        border-radius: 5px;
+        overflow: hidden;
+        .btn-add-number {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 10px 20px;
+          background: var(--dark-accent-color);
+          svg {
+            fill: var(--dark-text-color);
+            width: 20px;
+            height: 20px;
+          }
+          span {
+            font-weight: 500;
+            color: var(--dark-text-color);
+          }
+          &:hover {
+            background: var(--dark-accent-color-100);
+          }
+        }
+        .btn-delete-number {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 10px 20px;
+          background: var(--red-color);
+          svg {
+            fill: var(--dark-text-color);
+            width: 20px;
+            height: 20px;
+          }
+          span {
+            font-weight: 500;
+            color: var(--dark-text-color);
+          }
+          &:hover {
+            background: var(--red-color-100);
+          }
+        }
+      }
+    }
+    .pets {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      .pet-info {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        .ul-service-option {
+          position: relative;
+          clear: both;
+          width: 100%;
+          height: 0px;
+          overflow: hidden;
+          transition: height 0.4s ease;
+          bottom: -20px;
+          .service-option {
+            border-top: 1px solid var(--lighter-main-color);
+            &:hover {
+              font-weight: bold;
+            }
+            label {
+              display: block;
+              padding: 20px 0;
+            }
+          }
+        }
+      }
+      .service-select {
+        position: relative;
+        width: 100%;
+        line-height: 20px;
+        padding: 20px;
+        border: 1px solid var(--main-color);
+        border-radius: 5px;
+        text-transform: uppercase;
+        margin: 0.8em 0;
+
+        label {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          cursor: pointer;
+        }
+        svg {
+          fill: var(--dark-text-color);
+          width: 30px;
+          height: 30px;
+        }
+        span:first-child {
+          position: absolute;
+          color: var(--dark-accent-color);
+          transform: translateX(2px) translateY(-29px);
+          font-size: 0.9em;
+          font-weight: 600;
+          padding: 0 10px;
+          background: var(--background-main-color);
+          border-left: 1px solid var(--dark-accent-color);
+          border-right: 1px solid var(--dark-accent-color);
+          left: 10px;
+        }
+        .height-fit-content {
+          height: fit-content !important;
+        }
+      }
+    }
+    .div-schedule-container {
+      width: 100%;
+      .schedule-container {
+        position: relative;
+        min-width: 300px;
+        max-width: 600px;
+        line-height: 20px;
+        height: 62px;
+        border: 1px solid var(--main-color);
+        border-radius: 5px;
+        color: rgba(100, 100, 100, 0.8);
+        margin: 0.8em 0;
+        &:hover,
+        label {
+          cursor: pointer;
+        }
+        label {
+          display: inline-flex;
+          width: 100%;
+          padding: 20px;
+          align-items: center;
+          text-transform: uppercase;
+          font-size: 1em;
+        }
+        input {
+          position: absolute;
+          opacity: 0;
+          height: 0;
+        }
+        svg {
+          fill: var(--text-color);
+          height: 20px;
+          width: 20px;
+          margin-right: 10px;
+        }
+        .calendarContainer {
+          position: absolute;
+          top: 70px;
+          left: -2px;
+          z-index: 10;
+        }
+
+        #horarioSelect {
+          border: none;
+          font-size: inherit;
+          letter-spacing: 1px;
+          width: 100%;
+          color: var(--text-color);
+          background: inherit;
+          &:enabled {
+            outline: none;
+          }
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .comments {
+      position: relative;
+      width: 300px;
+      margin: 0.8em 0;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      border: 1px solid var(--main-color);
+      border-radius: 5px;
+      textarea {
+        background: inherit;
+        display: block;
+        padding: 15px;
+        font-size: 1em;
+        line-height: 30px;
+        width: 100%;
+        border: none;
+        border-radius: 5px;
+        resize: none;
+        min-height: 130px;
+        &:focus {
+          outline: none;
+        }
+      }
+      span {
+        background: var(--background-main-color);
+        position: absolute;
+        left: 12px;
+        top: -10px;
+        padding: 0 10px;
+        pointer-events: none;
+        font-size: 0.9em;
+        letter-spacing: 0.4px;
+        color: var(--dark-accent-color);
+        text-transform: uppercase;
+        transition: all 0.5s;
+        border-left: 1px solid var(--dark-accent-color);
+        border-right: 1px solid var(--dark-accent-color);
+      }
+    }
+  }
+  #btnAgendar {
+    margin: 0;
+  }
+}
+
+/* General classes */
+.error-message {
+  color: var(--red-color);
+  font-size: 1em;
+  margin: 8px 0;
+  display: block;
+  position: relative;
+}
+.toggle-display-none {
+  display: none !important;
+}
+.toggle-display-visible {
+  display: visible !important;
+}
+.submit-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  a {
+    color: var(--dark-accent-color);
+    margin: 10px 0;
+  }
+}
+/********************/
+
+/** IMAGE SLIDERS */
+.img-sliders {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.img-slider-size {
+  height: 100%;
+  background-color: #212121;
+  overflow: hidden;
+}
+
+// TODO - check classes and refactor
+
+.btnBorrarMascota {
+  position: relative;
+  align-self: center;
+  width: 280px;
+  margin: 20px 0;
+  background-color: #e4e6eb;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  padding: 10px 20px;
+  color: #4b4f56;
+  font-weight: bold;
+  display: inline-block;
+  border: 1px solid;
+  &:hover {
+    background-color: #c5c6ca;
+    color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+/** CITAS SUBHEADER */
+.subHeader-container {
+  position: relative;
+  width: 100%;
+  padding-top: 1em;
+}
+.div-buscador {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 2em 0;
+}
+.buscador {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  input,
+  button {
+    height: 3rem;
+    font-size: 1.2rem;
+    /* border: 2px solid var(--color-dark); */
+  }
+  input[type="search"] {
+    outline: none;
+    width: 70%;
+    padding: 10px 1.2rem;
+    border-radius: var(--rad);
+    appearance: none;
+    transition: all 0.2s var(--bez);
+    transition-property: width, border-radius;
+    position: relative;
+  }
+  button {
+    display: none;
+    background: #57bd84;
+    border-radius: 0 var(--rad) var(--rad) 0;
+    padding: 0 10px;
+  }
+  input:not(:placeholder-shown) ~ button {
+    border-radius: 0 var(--rad) var(--rad) 0;
+    border-left: none;
+    display: block;
+    position: relative;
+  }
+  input:not(:placeholder-shown) {
+    border-radius: var(--rad) 0 0 var(--rad);
+    display: block;
+    position: relative;
+    width: 70%;
+  }
+}
+#search::-webkit-search-cancel-button {
+  position: relative;
+  right: -10px;
+}
+.subHeader-div-btn {
+  display: flex;
+  justify-content: space-evenly;
+}
+.subHeader-btn {
+  width: 100px;
+  height: 40px;
+}
+
+//
+//
+//
+//
+
+@media screen and (min-width: 768px) {
+  .btn-primary {
+    width: fit-content;
+  }
+  .btn-secondary {
+    width: fit-content;
+  }
+
+  .form-appointment {
+    max-width: 600px;
+  }
+
+  .appointment-section {
+    max-width: 600px;
+  }
+
+  /** IMAGE SLIDERS */
+  .img-sliders {
+    height: 550px;
+    object-fit: contain;
+    object-position: 50% 35%;
+  }
+  .img-slider-size {
+    height: 500px;
+  }
+}
