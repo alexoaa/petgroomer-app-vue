@@ -1,5 +1,5 @@
 <template>
-  <main class="flex flex-wrap justify-center f" id="mainHomeView">
+  <section class="flex flex-wrap justify-center relative my-[60px]">
     <section
       class="w-[80%] px-7 py-9 bg-slate-50 mt-6 center text-left shadow border"
     >
@@ -32,7 +32,7 @@
         primordial la integridad y bienestar de las mascotas.
       </p>
     </section>
-  </main>
+  </section>
 </template>
 
 <script>

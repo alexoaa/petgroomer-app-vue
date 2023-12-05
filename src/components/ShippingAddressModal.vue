@@ -267,7 +267,7 @@ import { mapStores } from "pinia";
 import { onClickOutside } from "@vueuse/core";
 import { ref } from "vue";
 
-import useModalsStore from "@/stores/modalsStore";
+import useGeneralVariablesStore from "@/stores/generalVariables";
 
 export default {
   name: "ShippingAddressModal",
@@ -276,14 +276,14 @@ export default {
   },
   methods: {},
   computed: {
-    ...mapStores(useModalsStore),
+    ...mapStores(useGeneralVariablesStore),
   },
   mounted() {
     const ShippingAddressModalTarget = ref(
       this.$refs.ShippingAddressModalTarget
     );
     onClickOutside(ShippingAddressModalTarget, () => {
-      this.modalsStore.ShippingAddressModalIsOpen = false;
+      this.generalVariablesStore.ShippingAddressModalIsOpen = false;
     });
   },
 };

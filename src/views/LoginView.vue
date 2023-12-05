@@ -1,8 +1,22 @@
 <template>
-  <div class="wrapper">
+  <section>
     <div class="form-container">
-      <h1>Iniciar sesión</h1>
-      <!-- Email -->
+      <header>
+        <router-link
+          :to="{ name: 'login' }"
+          tabindex="0"
+          exact-active-class="view-active"
+          text="Iniciar sesión"
+          class="logo-image"
+        />
+        <router-link
+          :to="{ name: 'signup' }"
+          tabindex="0"
+          exact-active-class="view-active"
+          text="Registrarse"
+          class="logo-image"
+        />
+      </header>
       <vee-form
         action="/login"
         class="form-cita"
@@ -11,11 +25,11 @@
       >
         <!-- Email -->
         <div class="relative my-2 w-full">
-          <label class="block text-[var(--dark-accent-color)] text-lg"
+          <label class="block text-[var(--accent-color)] text-lg"
             >Correo electronico</label
           >
           <div
-            class="relative my-1.5 flex items-center w-full border border-solid border-[var(--light-gray-color)] rounded"
+            class="relative my-1.5 flex items-center w-full border-[2px] border-solid border-[var(--light-gray-color)] rounded-[6px] overflow-hidden"
           >
             <vee-field
               type="email"
@@ -30,14 +44,13 @@
             class="text-[var(--red-color)]"
           ></ErrorMessage>
         </div>
-
         <!-- Password -->
         <div class="relative my-2 w-full">
-          <label class="block text-[var(--dark-accent-color)] text-lg"
+          <label class="block text-[var(--accent-color)] text-lg"
             >Contraseña</label
           >
           <div
-            class="relative my-1.5 flex items-center w-full pr-3 border border-solid border-[var(--light-gray-color)] rounded"
+            class="relative my-1.5 flex items-center w-full pr-3 border-[2px] border-solid border-[var(--light-gray-color)] rounded-[6px] overflow-hidden"
           >
             <vee-field
               :type="passFieldType"
@@ -63,34 +76,38 @@
             class="text-[var(--red-color)]"
           ></ErrorMessage>
         </div>
-
         <!-- Login button -->
         <div class="submit-container">
-          <button type="submit" id="btnIngresar" class="btn-submit">
-            Iniciar sesión
-          </button>
+          <button type="submit" class="btn-primary">Iniciar sesión</button>
           <div class="error-message">
             {{ responseError }}
           </div>
-          <div class="form-divisor" />
           <router-link
             :to="{ name: 'recuperarContraseña' }"
             text="¿Olvidaste tu contraseña?"
             tabindex="0"
-            exact-active-class="no-active"
-            @click="closeAuthModal"
-            class="hover:text-[var(--dark-accent-color-100)]"
+            class="text-[var(--accent-color)] hover:text-[var(--accent-color-100)] my-[18px]"
           />
+          <div class="form-divisor" />
+          <p class="text-center">
+            ¿No tienes una cuenta?
+            <router-link
+              :to="{ name: 'signup' }"
+              text="Crear una cuenta"
+              tabindex="0"
+              class="text-[var(--main-color)] hover:text-[var(--secondary-color)]"
+            />
+          </p>
         </div>
       </vee-form>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
 import { mapStores, mapActions } from "pinia";
-import useUserStore from "@/stores/user";
-import useGeneralVariablesStore from "@/stores/generalVariables";
+import { useUserStore } from "@/stores/user";
+import router from "@/router";
 
 export default {
   name: "LoginForm",
@@ -108,8 +125,8 @@ export default {
     async loginUser(values) {
       this.responseError = "";
       const loginRequest = await this.userStore.login(values);
-      if (loginRequest.success) this.closeAuthModal();
-      else this.responseError = loginRequest.message;
+      if (!loginRequest.success) this.responseError = loginRequest.message;
+      else router.push("/");
     },
     togglePass() {
       this.passFieldType =
@@ -117,9 +134,6 @@ export default {
     },
     ...mapActions(useUserStore, { loadData: "loadData" }),
     ...mapActions(useUserStore, { login: "login" }),
-    ...mapActions(useGeneralVariablesStore, {
-      closeAuthModal: "closeAuthModal",
-    }),
   },
   computed: {
     ...mapStores(useUserStore),
@@ -127,11 +141,51 @@ export default {
 };
 </script>
 
-<style scoped>
-.form-divisor {
-  border-bottom: 1px solid var(--light-gray-color-100);
-  margin: 20px 16px;
-  height: 1px;
+<style scoped lang="scss">
+section {
+  padding: 70px 0;
+}
+.form-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 500px;
+  margin: 0 auto;
+  header {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 320px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 6px 1px var(--light-gray-color);
+    border-radius: 6px;
+    overflow: hidden;
+    a {
+      padding: 10px 20px;
+      position: relative;
+      width: 100%;
+      font-weight: 500;
+      text-align: center;
+      &:hover {
+        cursor: pointer;
+        color: var(--main-color);
+      }
+    }
+  }
+}
+.btn-primary {
   width: 100%;
+}
+.view-active {
+  background: var(--main-color);
+  color: var(--white-text-color);
+}
+
+@media screen and (min-width: 768px) {
+  section {
+  }
+  .form-container {
+    padding: 60px 0;
+  }
 }
 </style>

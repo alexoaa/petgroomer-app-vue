@@ -34,17 +34,14 @@
           </div>
           <div class="submit-container-recover-pass">
             <router-link
-              :to="{ name: 'home' }"
+              :to="{ name: 'login' }"
               tabindex="0"
               text="Cancelar"
-              exact-active-class="no-active"
-              @click="openAuthModal"
-              class="btn-terciary-small"
-              id="btnCancelar"
+              class="py-[10px] px-[20px] hover:font-bold"
             />
             <button
               id="btnAceptar"
-              class="btn-submit-small"
+              class="btn-terciary py-[10px] px-[20px]"
               type="submit"
               tabindex="0"
             >
@@ -63,12 +60,11 @@
           </div>
           <div class="submit-container-recover-pass">
             <router-link
-              :to="{ name: 'home' }"
+              :to="{ name: 'login' }"
               tabindex="0"
               text="Iniciar sesion"
               exact-active-class="no-active"
-              class="btn-aceptar"
-              id="btnCancelar"
+              class="btn-primary"
             />
           </div>
         </div>
@@ -84,8 +80,7 @@
 
 <script>
 import { mapActions } from "pinia";
-import useModalsStore from "@/stores/modalsStore";
-import useUserStore from "@/stores/user";
+import { useUserStore } from "@/stores/user";
 
 export default {
   name: "RecuperarContraseña",
@@ -107,13 +102,10 @@ export default {
       this.waitingResponse = false;
       if (!recoverRequest.success) this.responseError = recoverRequest.message;
       else {
-        this.confirmationNotification = false;
+        this.confirmationNotification = true;
         this.confirmationMessage = recoverRequest.message;
       }
-      console.log(recoverRequest);
     },
-    ...mapActions(useModalsStore, { closeAuthModal: "closeAuthModal" }),
-    ...mapActions(useModalsStore, { openAuthModal: "openAuthModal" }),
     ...mapActions(useUserStore, { recoverPassword: "recoverPassword" }),
   },
 };
@@ -127,6 +119,7 @@ export default {
   margin: 50px 20px 0;
   max-width: 500px;
   justify-self: center;
+  padding: 60px 0;
   text-align: center;
   h2 {
     font-size: 2rem;
@@ -167,9 +160,8 @@ export default {
       padding: 10px 15px;
       display: flex;
       align-items: center;
-      border: 1px solid rgba(100, 100, 100, 1);
-      border-radius: 5px;
-      letter-spacing: 1px;
+      border: 2px solid var(--light-gray-color);
+      border-radius: 6px;
     }
   }
 }

@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    <div class="w-full h-[80px] bg-[var(--main-color)]" />
     <section class="w-full h-auto">
       <EsteticaImageSlider />
     </section>
@@ -268,8 +269,9 @@
               />
               <CalendarEstetica
                 class="calendarContainer"
-                v-if="this.sidebarStore.calendarEsteticaIsActive"
+                v-if="this.generalVariablesStore.calendarEsteticaIsActive"
                 @datePicked="datePicked"
+                :onClickOutsideNeeded="true"
               />
             </div>
             <ErrorMessage name="fechaCita" class="error-message"></ErrorMessage>
@@ -325,8 +327,8 @@
 
 <script>
 import { mapStores } from "pinia";
-import useUserStore from "@/stores/user";
-import useSidebarStore from "@/stores/sidebar";
+import { useUserStore } from "@/stores/user";
+import useGeneralVariablesStore from "@/stores/generalVariables";
 import EsteticaImageSlider from "@/components/EsteticaImageSlider.vue";
 import CalendarEstetica from "@/components/CalendarEstetica.vue";
 
@@ -385,7 +387,7 @@ export default {
     },
     toggleCalendarComp() {
       setTimeout(() => {
-        this.sidebarStore.calendarEsteticaIsActive = true;
+        this.generalVariablesStore.calendarEsteticaIsActive = true;
       }, 100);
     },
     datePicked(date) {
@@ -398,7 +400,7 @@ export default {
     },
   },
   computed: {
-    ...mapStores(useUserStore, useSidebarStore),
+    ...mapStores(useUserStore, useGeneralVariablesStore),
   },
 };
 </script>

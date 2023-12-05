@@ -3,8 +3,6 @@
 </template>
 
 <script setup>
-import useSidebarStore from "@/stores/sidebar";
-
 import { onClickOutside } from "@vueuse/core";
 import { onMounted, ref } from "vue";
 
@@ -15,19 +13,18 @@ import VanillaCalendar from "@uvarov.frontend/vanilla-calendar";
 import "@uvarov.frontend/vanilla-calendar/build/vanilla-calendar.min.css";
 
 // Additional styles
-import "@uvarov.frontend/vanilla-calendar/build/themes/dark.min.css";
+import "@uvarov.frontend/vanilla-calendar/build/themes/light.min.css";
+// import "@uvarov.frontend/vanilla-calendar/build/themes/dark.min.css";
 
 const calendarAppointment = ref(null);
-const emit = defineEmits(["datePicked"]);
+const emit = defineEmits(["datePicked", "closeCalendar"]);
+const props = defineProps(["isAdmin", "onClickOutsideNeeded"]);
 
-const checkAvailability = (date) => {
-  //TODO CHECK AVAILABILITY
+const returnDate = (date) => {
   date = date[0].split("-");
-  date = `${date[2]}-${date[1]}-${date[0]}`;
+  date = `${date[2]}/${date[1]}/${date[0]}`;
   emit("datePicked", date);
 };
-
-const sidebarStore = useSidebarStore();
 
 onMounted(() => {
   const today = new Date();
@@ -58,35 +55,57 @@ onMounted(() => {
   // Options for calendar
   const options = {
     date: {
-      min: formattedDate,
+      min: props.isAdmin ? "" : formattedDate,
       max: "2038-12-31",
     },
     settings: {
       range: {
-        min: formattedDate,
+        min: props.isAdmin ? "" : formattedDate,
         max: "2038-12-31",
       },
       visibility: {
         disabled: true,
+        theme: "light",
       },
+      lang: "define",
+    },
+    locale: {
+      months: [
+        "Enero",
+        "Febrero",
+        "Marzo",
+        "Abril",
+        "Mayo",
+        "Junio",
+        "Julio",
+        "Agosto",
+        "Septiembre",
+        "Octubre",
+        "Noviembre",
+        "Diciembre",
+      ],
+      weekday: ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"],
     },
     actions: {
       clickDay: (event, dates) => {
-        setTimeout(() => {
-          sidebarStore.calendarEsteticaIsActive = false;
-        }, 200);
-
-        checkAvailability(dates);
+        emit("closeCalendar");
+        returnDate(dates);
       },
     },
   };
 
   const calendar = new VanillaCalendar("#calendar", options);
   calendar.init();
-
-  onClickOutside(calendarAppointment, (e) => {
-    sidebarStore.calendarEsteticaIsActive = false;
-    e.stopPropagation(); // Stops bug when clicking in the button to close it, it reopens
-  });
+  if (props.onClickOutsideNeeded) {
+    onClickOutside(calendarAppointment, (e) => {
+      emit("closeCalendar");
+      e.stopPropagation(); // Stops bug when clicking in the button to close it, it reopens
+    });
+  }
 });
 </script>
+<style scoped>
+[data-calendar-theme="light"].vanilla-calendar {
+  box-shadow: 0 0 5px 2px var(--light-gray-color);
+}
+</style>

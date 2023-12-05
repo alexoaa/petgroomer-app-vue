@@ -33,6 +33,14 @@ export default {
     defineRule("integer", integer);
     defineRule("excluded", excluded);
     defineRule("tos", required);
+    defineRule("date", (date) => {
+      const regex = /^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[012])\/\d{4}$/;
+      return regex.test(date);
+    });
+    defineRule("hour", (hour) => {
+      const regex = /^([01]?[0-9]|2[0-3]):[0-5][0-9]$/;
+      return regex.test(hour);
+    });
 
     configure({
       generateMessage: (ctx) => {
@@ -49,11 +57,13 @@ export default {
           excluded: `*The password typed is not allowed. Try to add another password.`,
           passwords_mismatch: `Las contraseñas no coinciden.`,
           tos: `*Debes aceptar los terminos y condiciones.`,
+          date: "No es una fecha válida.",
+          hour: "No es una hora válida.",
         };
 
         const errorMessage = errorMessages[ctx.rule.name]
           ? errorMessages[ctx.rule.name]
-          : `The field ${ctx.field} is invalid.`;
+          : `El campo ${ctx.field} es invalido.`;
 
         return errorMessage;
       },

@@ -1,5 +1,5 @@
 <template>
-  <main class="p-4">
+  <main class="px-4 py-[60px]">
     <!-- Upcoming appointments -->
     <article class="upcoming-appointment">
       <h1>Proximas citas</h1>
@@ -173,7 +173,7 @@
 </template>
 
 <script setup>
-import useUserStore from "@/stores/user.js";
+import { useUserStore } from "@/stores/user.js";
 import { onBeforeMount } from "vue";
 
 const userStore = useUserStore();
@@ -261,9 +261,9 @@ export default {
       padding: 15px 30px;
       border-radius: 5px;
       color: #ffffff;
-      background: var(--btn-color);
+      background: var(--dark-accent-color);
       &:hover {
-        background: #0d80ee;
+        background: var(--dark-accent-color-100);
       }
     }
   }

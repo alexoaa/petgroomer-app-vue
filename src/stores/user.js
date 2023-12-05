@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-export default defineStore("user", {
+export const useUserStore = defineStore("user", {
   state: () => ({
     isAuth: false,
     isAdmin: false,
@@ -26,7 +26,7 @@ export default defineStore("user", {
     async logout() {
       try {
         const axiosRequest = await axios.delete(
-          "http://localhost:5600/logout",
+          `${import.meta.env.VITE_VUE_APP_API_URL}/logout`,
           { withCredentials: true }
         );
         if (axiosRequest.status === 200) {
@@ -52,7 +52,7 @@ export default defineStore("user", {
     async login(values) {
       try {
         const axiosRequest = await axios.post(
-          "http://localhost:5600/login",
+          `${import.meta.env.VITE_VUE_APP_API_URL}/login`,
           {
             email: values.email,
             password: values.password,
@@ -73,10 +73,43 @@ export default defineStore("user", {
           };
       }
     },
+    async register(values) {
+      try {
+        const axiosRequest = await axios.post(
+          `${import.meta.env.VITE_VUE_APP_API_URL}/register`,
+          {
+            name: values.name,
+            lastName: values.lastName,
+            phone: values.phone,
+            email: values.email,
+            password: values.password,
+            confirmPassword: values.confirmPassword,
+            tos: values.tos,
+          },
+          // In order to accept cookies from server, this option must be true and configured in the server
+          { withCredentials: true }
+        );
+        //Passing values to the store action to assign user data
+        if (axiosRequest.status === 200) {
+          this.isAuthenticating = true;
+          this.loadData(axiosRequest.data.data);
+          this.isAuthenticating = false;
+          return { success: true, message: axiosRequest.data.message };
+        }
+      } catch (axiosError) {
+        if (axiosError.response)
+          return { success: false, message: axiosError.response.data.message };
+        else
+          return {
+            success: false,
+            message: "Ha ocurrido un error, intenta mas tarde.",
+          };
+      }
+    },
     async getUserAccountInfo() {
       try {
         const axiosRequest = await axios.get(
-          "http://localhost:5600/user/info-account",
+          `${import.meta.env.VITE_VUE_APP_API_URL}/user/info-account`,
           { withCredentials: true }
         );
         if (axiosRequest.status === 200) {
@@ -89,7 +122,7 @@ export default defineStore("user", {
     async updateUserAccountInfo(values) {
       try {
         const axiosRequest = await axios.post(
-          "http://localhost:5600/user/account/update-info",
+          `${import.meta.env.VITE_VUE_APP_API_URL}/user/account/update-info`,
           { values },
           { withCredentials: true }
         );
@@ -112,7 +145,9 @@ export default defineStore("user", {
     async changePassword(values) {
       try {
         const axiosRequest = await axios.post(
-          "http://localhost:5600/user/account/password/change-password",
+          `${
+            import.meta.env.VITE_VUE_APP_API_URL
+          }/user/account/password/change-password`,
           {
             currentPassword: values.currentPassword,
             newPassword: values.newPassword,
@@ -134,7 +169,7 @@ export default defineStore("user", {
     async scheduleAppointment(values) {
       try {
         const axiosRequest = await axios.post(
-          "http://localhost:5600/new-appointment",
+          `${import.meta.env.VITE_VUE_APP_API_URL}/new-appointment`,
           {
             user_name: values.nombreCliente,
             user_phone: values.numeroTelefono,
@@ -143,7 +178,7 @@ export default defineStore("user", {
             user_pet_specie: values.especieMascota,
             user_pet_breed: values.razaMascota || null,
             appointment_service: values.servicioMascota,
-            appointment_price: values.precioCita || null,
+            appointment_price: values.precioCita || 0,
             appointment_date: values.fechaCita,
             appointment_time: values.horaCita,
             appointment_comment: values.comentariosCita || null,
@@ -164,7 +199,9 @@ export default defineStore("user", {
     async getHourAvailability(dateSelected) {
       try {
         const axiosRequest = await axios.get(
-          `http://localhost:5600/appointment-availability?date-selected=${dateSelected}`,
+          `${
+            import.meta.env.VITE_VUE_APP_API_URL
+          }/appointment-availability?date-selected=${dateSelected}`,
           { withCredentials: true }
         );
         return { success: true, message: axiosRequest.data.message };
@@ -181,7 +218,7 @@ export default defineStore("user", {
     async recoverPassword(values) {
       try {
         const axiosRequest = await axios.post(
-          "http://localhost:5600/recover-password/email",
+          `${import.meta.env.VITE_VUE_APP_API_URL}/recover-password/email`,
           {
             email: values.email,
           },
@@ -201,7 +238,9 @@ export default defineStore("user", {
     async verifyResetLinkRequest(values) {
       try {
         const axiosRequest = await axios.get(
-          `http://localhost:5600/recover-password/verify/${values.user}?t=${values.token}`,
+          `${import.meta.env.VITE_VUE_APP_API_URL}/recover-password/verify/${
+            values.user
+          }?t=${values.token}`,
           { withCredentials: true }
         );
         return { success: true, message: axiosRequest.data.message };
@@ -218,7 +257,7 @@ export default defineStore("user", {
     async resetPassword(values) {
       try {
         const axiosRequest = await axios.post(
-          "http://localhost:5600/recover-password/reset",
+          `${import.meta.env.VITE_VUE_APP_API_URL}/recover-password/reset`,
           {
             token: values.token,
             user: values.user,
@@ -242,7 +281,7 @@ export default defineStore("user", {
       console.log("checkUpcomingAppointments");
       try {
         const axiosRequest = await axios.get(
-          `http://localhost:5600/user/upcoming-appointments`,
+          `${import.meta.env.VITE_VUE_APP_API_URL}/user/upcoming-appointments`,
           { withCredentials: true }
         );
         return { success: true, message: axiosRequest.data.message };
@@ -261,7 +300,9 @@ export default defineStore("user", {
       return;
       try {
         const axiosRequest = await axios.get(
-          `http://localhost:5600/get-appointments-history/${values.user}?t=${values.token}`,
+          `${import.meta.env.VITE_VUE_APP_API_URL}/get-appointments-history/${
+            values.user
+          }?t=${values.token}`,
           { withCredentials: true }
         );
         return { success: true, message: axiosRequest.data.message };
@@ -276,4 +317,5 @@ export default defineStore("user", {
       }
     },
   },
+  persist: true,
 });

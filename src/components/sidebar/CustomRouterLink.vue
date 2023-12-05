@@ -15,7 +15,7 @@ export default {
   name: "CustomRouterLink",
   data() {
     return {
-      hrefSvg: `src/assets/icons/icons.svg#${this.svgRef}`,
+      hrefSvg: `/src/assets/icons/icons.svg#${this.svgRef}`,
     };
   },
   props: {

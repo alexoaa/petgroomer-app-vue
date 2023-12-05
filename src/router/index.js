@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 // Views
 import Home from "@/views/HomeView.vue";
-import Estetica from "@/views/EsteticaView.vue";
+import AboutUs from "@/views/AboutUsView.vue";
+import LoginView from "@/views/LoginView.vue";
+import SignupView from "@/views/SignupView.vue";
 import ConfigurarCuenta from "@/views/user/UserConfigurarCuenta.vue";
-import Tienda from "@/views/TiendaView.vue";
 import RecuperarContraseña from "@/views/password/RecuperarContraseña.vue";
 import RestablecerContraseña from "@/views/password/RestablecerContraseña.vue";
 import UserConsultarCitas from "@/views/user/UserConsultarCitas.vue";
@@ -11,7 +12,8 @@ import UserConsultarCitas from "@/views/user/UserConsultarCitas.vue";
 import AdminConsultarCitas from "@/views/admin/AdminConsultarCitas.vue";
 import AdminAgendarCita from "@/views/admin/AdminAgendarCita.vue";
 //  Stores
-import useUserStore from "@/stores/user";
+import { useUserStore } from "@/stores/user";
+import useGeneralVariablesStore from "@/stores/generalVariables";
 
 const routes = [
   {
@@ -19,43 +21,41 @@ const routes = [
     path: "/",
     component: Home,
   },
-  { name: "estetica", path: "/estetica", component: Estetica },
+  {
+    name: "estetica",
+    path: "/estetica",
+    component: () => import("@/views/EsteticaView.vue"),
+  },
+  {
+    name: "login",
+    path: "/iniciar-sesion",
+    component: LoginView,
+  },
+  {
+    name: "signup",
+    path: "/registrar",
+    component: SignupView,
+  },
   {
     name: "misCitas",
     path: "/mis-citas",
     component: UserConsultarCitas,
-    beforeEnter: (to, from, next) => {
-      const userStore = useUserStore();
-      if (userStore.isAuth) next();
-      else {
-        next({ name: "home" });
-      }
+    meta: {
+      requiresAuth: true,
     },
   },
-
   {
     name: "configurarCuenta",
     path: "/cuenta",
     component: ConfigurarCuenta,
-    beforeEnter: (to, from, next) => {
-      const userStore = useUserStore();
-      if (userStore.isAuth) next();
-      else {
-        next({ name: "home" });
-      }
+    meta: {
+      requiresAuth: true,
     },
   },
   {
     name: "recuperarContraseña",
     path: "/recuperar-contrasena",
     component: RecuperarContraseña,
-    beforeEnter: (to, from, next) => {
-      const userStore = useUserStore();
-      if (!userStore.isAuth) next();
-      else {
-        next({ name: "home" });
-      }
-    },
   },
   {
     name: "restablecerContraseña",
@@ -64,15 +64,11 @@ const routes = [
     props: true,
   },
   {
-    name: "tienda",
-    path: "/tienda",
-    component: Tienda,
-  },
-  {
     name: "admin",
     path: "/admin",
     meta: {
-      requiresAdmin: false,
+      requiresAdmin: true,
+      requiresAuth: true,
     },
     children: [
       {
@@ -88,20 +84,25 @@ const routes = [
     ],
   },
   {
+    name: "aboutUs",
+    path: "/acerca-de-nosotros",
+    component: AboutUs,
+  },
+  {
     path: "/:catchAll(.*)*",
-    // redirect: { name: "404Page"}
     redirect: { name: "home" },
   },
 ];
 const routeTitles = {
   "/": "DogBarber",
-  "/tienda": "DogBarber - Tienda",
-  "/estetica": "Agenda una cita para tu peludo",
-  "/mis-citas": "Mis citas",
-  "/cuenta": "Cuenta",
+  "/estetica": "Agenda una Cita para tu Peludo",
+  "/iniciar-sesion": "DogBarber - Iniciar Sesión",
+  "/registrar": "DogBarber - Registrarse",
+  "/mis-citas": "Mis Citas",
+  "/cuenta": "Tu Cuenta",
   "/recuperar-contrasena":
     "¿Olvidaste tu contraseña? | No puedes iniciar sesión",
-  "/recover-password/confirm/${userId}/${token}": "Restablece tu contraseña",
+  "/recover-password/confirm/${userId}/${token}": "Restablece tu Contraseña",
 };
 
 const router = createRouter({
@@ -116,28 +117,31 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
+  const generalVariablesStore = useGeneralVariablesStore();
+  if (to.name == "home") generalVariablesStore.homePageNavbarColor = true;
+  else generalVariablesStore.homePageNavbarColor = false;
 
-  // // Checking if the route doesn't require to be auth
-  // if (!to.meta.requiresAuth) {
-  //   next();
-  //   return;
-  // }
-  // // Checking if the user has admin
-  // if (userStore.isAuth) next();
-  // else {
-  //   next({ name: "home" });
-  // }
-
-  // Checking if the route doesn't require a meta field - if route doesn't require to be admin
-  if (!to.meta.requiresAdmin) {
+  if (!to.meta.requiresAuth) {
     next();
     return;
   }
-  // Checking if the user has admin
-  if (userStore.isAdmin) next();
-  else {
+  // Checking if the user is auth
+  if (userStore.isAuth) {
+    // Checking if the route requires admin and if user has admin role
+    if (to.meta.requiresAdmin) {
+      if (userStore.isAdmin) {
+        next();
+        return;
+      } else {
+        next({ name: "home" });
+        return;
+      }
+    }
+    next();
+  } else {
     next({ name: "home" });
   }
+  return;
 });
 
 router.afterEach((to) => {

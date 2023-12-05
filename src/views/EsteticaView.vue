@@ -1,301 +1,343 @@
 <template>
-  <div class="wrapper">
-    <section class="w-full h-auto">
+  <div class="py-[60px]">
+    <section class="w-full h-auto pt-0">
       <EsteticaImageSlider />
     </section>
     <div class="form-container">
-      <h1>Agenda una cita</h1>
       <vee-form
         action="/new-appointment"
         method="POST"
         class="form-appointment"
         :validation-schema="agendarSchema"
         @submit="newAppointment"
+        v-slot="{ errors }"
       >
         <div class="appointment-section">
           <!-- Client name -->
-          <div id="nombreClienteDiv" class="fields-container">
-            <div class="inputBox">
-              <vee-field
-                type="text"
-                name="nombreCliente"
-                v-model="nombreCliente"
-                id="nombreCliente"
-                autocomplete="off"
-                required
-              />
-              <span>Nombre Cliente</span>
-            </div>
-            <ErrorMessage name="nombreCliente" class="error-message" />
-          </div>
-          <!-- Phone number -->
-          <div id="numeroTelefonoDiv" class="fields-container">
-            <div class="inputBox pl-[95px] pl-[0]">
-              <vee-field
-                type="tel"
-                maxlength="15"
-                name="numeroTelefono"
-                v-model="numeroTelefono"
-                id="numeroTelefono"
-                autocomplete="off"
-                required
-              />
-              <span>Numero de Telefono</span>
-            </div>
-            <ErrorMessage name="numeroTelefono" class="error-message" />
-          </div>
-          <!-- Second phone number -->
-          <div
-            id="divSegundoNumTelDiv"
-            class="fields-container mb-0"
-            v-if="this.segundoNumTelActive"
-          >
-            <div class="inputBox" id="divSegundoNumTel">
-              <vee-field
-                type="tel"
-                name="segundoNumTel"
-                id="segundoNumTel"
-                v-model="segundoNumTel"
-                autocomplete="off"
-                maxlength="10"
-                required
-              />
-              <span>Numero de Telefono Extra</span>
-            </div>
-            <ErrorMessage name="segundoNumTel" class="error-message" />
-          </div>
-          <!-- Add second number button -->
-          <div class="add-number">
-            <button
-              type="button"
-              id="btnAgregarTel"
-              @click="isSegundoNumTelActive"
-            >
-              <div
-                class="btn-add-number"
-                :class="this.segundoNumTelActive ? 'toggle-display-none' : ''"
-              >
-                <svg><use href="@/assets/icons/icons.svg#plus" /></svg>
-                <span class="ml-2">Añadir otro numero</span>
+          <div v-show="!userStore.isAuth" class="user-contact-info">
+            <h1>Introduce tus datos de contacto</h1>
+            <div id="nombreClienteDiv" class="fields-container">
+              <div class="inputBox">
+                <vee-field
+                  type="text"
+                  name="nombreCliente"
+                  v-model="nombreCliente"
+                  id="nombreCliente"
+                  autocomplete="off"
+                  required
+                />
+                <span>Tu nombre *</span>
               </div>
-              <div
-                class="btn-delete-number"
-                :class="this.segundoNumTelActive ? '' : 'toggle-display-none'"
-              >
-                <svg><use href="@/assets/icons/icons.svg#cross" /></svg>
-                <span class="ml-2">Borrar numero</span>
+              <ErrorMessage name="nombreCliente" class="error-message" />
+            </div>
+            <!-- Phone number -->
+            <div id="numeroTelefonoDiv" class="fields-container">
+              <div class="inputBox pl-[95px] pl-[0]">
+                <vee-field
+                  type="tel"
+                  maxlength="15"
+                  name="numeroTelefono"
+                  v-model="numeroTelefono"
+                  id="numeroTelefono"
+                  autocomplete="off"
+                  required
+                />
+                <span>Numero de telefono *</span>
               </div>
-            </button>
+              <ErrorMessage name="numeroTelefono" class="error-message" />
+            </div>
+            <!-- Second phone number -->
+            <div id="divSegundoNumTelDiv" class="fields-container mb-0">
+              <div class="inputBox" id="divSegundoNumTel">
+                <vee-field
+                  type="tel"
+                  name="segundoNumTel"
+                  id="segundoNumTel"
+                  v-model="segundoNumTel"
+                  autocomplete="off"
+                  maxlength="10"
+                  required
+                />
+                <span>Numero de telefono (Opcional)</span>
+              </div>
+              <ErrorMessage name="segundoNumTel" class="error-message" />
+            </div>
           </div>
           <!-- Pets -->
           <div class="pets">
             <div class="pet-info" id="datosMascota">
               <!-- TODO - WHEN USER INPUTS NAME OF PET, IF USER IS AUTH WE SHOULD LOOK AND OFFER AN OPTION TO CHOSE THAT PET -->
-              <!-- Pet name -->
-              <div id="nombreMascotaDiv" class="fields-container">
-                <div class="inputBox">
-                  <vee-field
-                    type="text"
-                    name="nombreMascota"
-                    id="nombreMascota"
-                    v-model="nombreMascota"
-                    autocomplete="off"
-                    required
-                  />
-                  <span>Nombre Mascota</span>
+              <div class="w-full">
+                <h1>Datos de tu mascota</h1>
+                <!-- Pet name -->
+                <div id="nombreMascotaDiv" class="fields-container">
+                  <div class="inputBox">
+                    <vee-field
+                      type="text"
+                      name="nombreMascota"
+                      id="nombreMascota"
+                      v-model="nombreMascota"
+                      autocomplete="off"
+                      required
+                    />
+                    <span>Nombre de tu mascota *</span>
+                  </div>
+                  <ErrorMessage name="nombreMascota" class="error-message" />
                 </div>
-                <ErrorMessage name="nombreMascota" class="error-message" />
-              </div>
-              <!-- Pet specie -->
-              <div id="especieMascotaDiv" class="fields-container">
-                <div class="service-select">
-                  <vee-field
-                    type="text"
-                    id="especieMascota"
-                    name="especieMascota"
-                    class="toggle-display-none"
-                    v-model="especieMascota"
-                    placeholder="Selecciona la especie..."
-                  />
-                  <label
-                    id="labelEspecieMascota"
-                    @click="isEpecieMascotaActive"
-                  >
-                    <span>Especie</span>
-                    <span>{{ this.especieMascotaLabel }}</span>
-                    <svg>
-                      <use href="@/assets/icons/icons.svg#chevronDown" />
-                    </svg>
-                  </label>
-                  <ul
-                    class="ul-service-option ease-in duration-1000"
-                    id="slide"
-                    :class="
-                      this.especieMascotaActive ? 'height-fit-content' : ''
-                    "
-                  >
-                    <li class="service-option">
-                      <label
-                        id="servOpcBano"
-                        @click="isEpecieMascotaActive('Perro')"
-                        >Perro</label
+                <!-- Pet specie -->
+                <div id="especieMascotaDiv" class="fields-container">
+                  <div class="breed-select">
+                    <vee-field
+                      type="text"
+                      id="especieMascota"
+                      name="especieMascota"
+                      class="toggle-display-none"
+                      v-model="especieMascota"
+                    />
+                    <label
+                      id="labelEspecieMascota"
+                      tabindex="0"
+                      @click="isEpecieMascotaActive"
+                      @keyup.tab="isEpecieMascotaActive"
+                    >
+                      <span
+                        :class="{
+                          'span-active':
+                            this.especieMascotaActive ||
+                            this.especieMascotaLabel,
+                        }"
+                        >Especie *</span
                       >
-                    </li>
-                    <li class="service-option">
-                      <label
-                        id="servOpcBanoCorte"
-                        @click="isEpecieMascotaActive('Gato')"
-                        >Gato</label
+                      <span>{{ this.especieMascotaLabel }}</span>
+                      <svg
+                        :style="
+                          this.especieMascotaActive
+                            ? 'transform: rotate(180deg)'
+                            : ''
+                        "
                       >
-                    </li>
-                  </ul>
+                        <use href="@/assets/icons/icons.svg#chevronDown" />
+                      </svg>
+                    </label>
+                    <ul
+                      class="ul-service-option ease-in duration-1000"
+                      id="slide"
+                      :class="
+                        this.especieMascotaActive ? 'height-fit-content' : ''
+                      "
+                    >
+                      <li
+                        class="service-option"
+                        :class="
+                          this.especieMascotaLabel === 'Perro'
+                            ? 'bg-[var(--light-gray-color-100)]'
+                            : ''
+                        "
+                      >
+                        <label
+                          id="servOpcBano"
+                          tabindex="0"
+                          @click="isEpecieMascotaActive('Perro')"
+                          @keyup.enter="isEpecieMascotaActive('Perro')"
+                          >Perro</label
+                        >
+                      </li>
+                      <li
+                        class="service-option"
+                        :class="
+                          this.especieMascotaLabel === 'Gato'
+                            ? 'bg-[var(--light-gray-color-100)]'
+                            : ''
+                        "
+                      >
+                        <label
+                          id="servOpcBanoCorte"
+                          tabindex="0"
+                          @click="isEpecieMascotaActive('Gato')"
+                          @keyup.enter="isEpecieMascotaActive('Gato')"
+                          >Gato</label
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                  <ErrorMessage name="especieMascota" class="error-message" />
                 </div>
-                <ErrorMessage name="especieMascota" class="error-message" />
-              </div>
-              <!-- Pet breed -->
-              <div id="razaMascotaDiv" class="fields-container">
-                <div class="inputBox">
-                  <vee-field
-                    type="text"
-                    name="razaMascota"
-                    id="razaMascota"
-                    v-model="razaMascota"
-                    autocomplete="off"
-                    required
-                  />
-                  <span>Raza Mascota</span>
+                <!-- Pet breed -->
+                <div id="razaMascotaDiv" class="fields-container">
+                  <div class="inputBox">
+                    <vee-field
+                      type="text"
+                      name="razaMascota"
+                      id="razaMascota"
+                      v-model="razaMascota"
+                      autocomplete="off"
+                      required
+                    />
+                    <span>Raza</span>
+                  </div>
+                  <ErrorMessage name="razaMascota" class="error-message" />
                 </div>
-                <ErrorMessage name="razaMascota" class="error-message" />
-              </div>
-              <!-- Grooming service -->
-              <div id="servicioMascotaDiv" class="fields-container">
-                <div class="service-select">
-                  <vee-field
-                    type="text"
-                    id="servicioMascota"
-                    name="servicioMascota"
-                    class="toggle-display-none"
-                    v-model="servicioMascota"
-                    placeholder="Selecciona la especie..."
-                  />
-                  <label @click="isServicioSelectActive">
-                    <span>Servicio</span>
-                    <span>{{ this.servicioPickedLabel }}</span>
-                    <svg>
-                      <use href="@/assets/icons/icons.svg#chevronDown" />
-                    </svg>
-                  </label>
-                  <ul
-                    class="ul-service-option ease-in duration-1000"
-                    id="slide"
-                    :class="
-                      this.servicioSelectActive ? 'height-fit-content' : ''
-                    "
-                  >
-                    <li class="service-option">
-                      <label
-                        @click="
-                          isServicioSelectActive('Baño');
-                          this.servicioMascota = 'Baño';
-                        "
-                        >Baño</label
-                      >
-                    </li>
-                    <li class="service-option">
-                      <label
-                        @click="
-                          isServicioSelectActive('Baño y Corte');
-                          this.servicioMascota = 'BañoCorte';
-                        "
-                        >Baño y Corte</label
-                      >
-                    </li>
-                    <li class="service-option">
-                      <label
-                        @click="
-                          isServicioSelectActive('Corte');
-                          this.servicioMascota = 'Corte';
-                        "
-                        >Corte</label
-                      >
-                    </li>
-                    <li class="service-option">
-                      <label
-                        @click="
-                          isServicioSelectActive('Corte de uñas');
-                          this.servicioMascota = 'CorteUnias';
-                        "
-                        >Corte de Uñas</label
-                      >
-                    </li>
-                  </ul>
-                </div>
-                <ErrorMessage name="servicioMascota" class="error-message" />
               </div>
             </div>
           </div>
-          <!-- Appointment date -->
-          <div id="fechaCitaDiv" class="div-schedule-container">
-            <div class="schedule-container">
-              <label @click.stop="toggleCalendarComp">
-                <div class="flex w-full items-center">
-                  <svg>
-                    <use href="@/assets/icons/icons.svg#calendar-days" />
-                  </svg>
-                  <span class="inline-block mr-[1em]">Fecha:</span>
-                  <span id="spanFechaCita" class="text-[var(--text-color)]">{{
-                    this.fechaCita
-                  }}</span>
-                </div>
-              </label>
-              <vee-field
-                type="text"
-                name="fechaCita"
-                id="fechaCita"
-                v-model="fechaCita"
-              />
-              <Transition
-                enter-active-class="animate__animated animate__fadeIn"
-                leave-active-class="animate__animated animate__fadeOut"
-              >
-                <CalendarEstetica
-                  class="calendarContainer"
-                  v-if="this.sidebarStore.calendarEsteticaIsActive"
-                  @datePicked="datePicked"
+          <!-- Grooming service -->
+          <div class="services-container">
+            <h1>Selecciona un servicio</h1>
+            <ul class="services">
+              <li>
+                <vee-field
+                  type="radio"
+                  id="bath"
+                  name="servicioMascota"
+                  v-model="servicioMascota"
+                  value="Baño"
+                  checked
                 />
-              </Transition>
-            </div>
-            <ErrorMessage name="fechaCita" class="error-message" />
-          </div>
-          <!-- Appointment time -->
-          <div id="horaCitaDiv" class="div-schedule-container">
-            <div class="schedule-container">
-              <label id="labelHorarioSelect">
-                <div class="flex items-center pr-2">
+                <label
+                  for="bath"
+                  tabindex="0"
+                  @keyup.enter="serviceInputIsChecked"
+                >
                   <svg>
-                    <use href="@/assets/icons/icons.svg#clock" />
+                    <use href="@/assets/icons/icons.svg#bath" />
                   </svg>
-                  <span>Hora:</span>
-                </div>
-                <select id="horarioSelect" v-model="horaCita">
-                  <option value="">Elige un horario</option>
-                  <option
-                    v-for="hora in horasDisponibles"
-                    :key="hora"
-                    :value="hora"
-                  >
-                    {{ hora }}
-                  </option>
-                </select>
-              </label>
-              <vee-field
-                type="text"
-                name="horaCita"
-                id="horaCita"
-                v-model="horaCita"
-              />
+                  <span>Solo Baño</span>
+                </label>
+              </li>
+              <li>
+                <vee-field
+                  type="radio"
+                  id="bathHaircut"
+                  name="servicioMascota"
+                  v-model="servicioMascota"
+                  value="Completo"
+                />
+                <label
+                  for="bathHaircut"
+                  tabindex="0"
+                  @keyup.enter="serviceInputIsChecked"
+                >
+                  <svg>
+                    <use href="@/assets/icons/icons.svg#bathHaircut" />
+                  </svg>
+                  <span>Baño y Corte</span>
+                </label>
+              </li>
+              <li>
+                <vee-field
+                  type="radio"
+                  id="brush"
+                  name="servicioMascota"
+                  v-model="servicioMascota"
+                  value="Deslanado"
+                />
+                <label
+                  for="brush"
+                  tabindex="0"
+                  @keyup.enter="serviceInputIsChecked"
+                >
+                  <svg>
+                    <use href="@/assets/icons/icons.svg#brush" />
+                  </svg>
+                  <span>Cepillado / Deslanado</span>
+                </label>
+              </li>
+            </ul>
+            <div class="services-included">
+              <h2>Todos los servicios incluyen*:</h2>
+              <ul>
+                <li>
+                  <svg>
+                    <use href="@/assets/icons/icons.svg#tick" />
+                  </svg>
+                  <span>Shampoo natural y de limpieza profunda </span>
+                </li>
+                <li>
+                  <svg><use href="@/assets/icons/icons.svg#tick" /></svg>
+                  <span> Fragancia </span>
+                </li>
+                <li>
+                  <svg><use href="@/assets/icons/icons.svg#tick" /></svg>
+                  <span>Limpieza de las glándulas anales </span>
+                </li>
+                <li>
+                  <svg><use href="@/assets/icons/icons.svg#tick" /></svg>
+                  <span> Secado </span>
+                </li>
+                <li>
+                  <svg><use href="@/assets/icons/icons.svg#tick" /></svg>
+                  <span> Limpieza de oídos </span>
+                </li>
+                <li>
+                  <svg><use href="@/assets/icons/icons.svg#tick" /></svg>
+                  <span> Corte de uñas </span>
+                </li>
+                <li>
+                  <svg><use href="@/assets/icons/icons.svg#tick" /></svg>
+                  <span> Cepillado </span>
+                </li>
+              </ul>
             </div>
-            <ErrorMessage name="horaCita" class="error-message" />
+            <ErrorMessage name="servicioMascota" class="error-message" />
+          </div>
+          <!-- Appointment date & time-->
+          <div class="appointment-schedule">
+            <h1>Selecciona la fecha y hora *</h1>
+            <div class="md:flex md:flex-wrap md:justify-evenly">
+              <div class="date-schedule-container">
+                <div class="date-schedule">
+                  <vee-field
+                    type="text"
+                    name="fechaCita"
+                    id="fechaCita"
+                    v-model="fechaCita"
+                  />
+                  <CalendarEstetica
+                    class="calendar-container"
+                    @datePicked="datePicked"
+                    :onClickOutsideNeeded="false"
+                  />
+                </div>
+                <ErrorMessage name="fechaCita" class="error-message" />
+              </div>
+              <div
+                class="hidden md:block w-[2px] rounded bg-[var(--light-gray-color)] m-[10px]"
+              />
+              <!-- Appointment time -->
+              <div class="md:max-w-[50%] text-center">
+                <h2>{{ this.fechaCitaSpanish }}</h2>
+                <div class="time-schedule-container">
+                  <div class="time-schedule">
+                    <ul>
+                      <vee-field
+                        type="text"
+                        name="horaCita"
+                        v-model="horaCita"
+                        class="hidden"
+                      />
+                      <li v-for="hour in availableHours" :key="hour">
+                        <input
+                          type="radio"
+                          :id="hour"
+                          v-model="horaCita"
+                          :value="hour"
+                        />
+                        <label
+                          :for="hour"
+                          tabindex="0"
+                          @keyup.enter="apptTimeInputIsChecked"
+                          >{{ hour }}
+                          <span>{{
+                            hour.split(":")[0] < 12 ? "AM" : "PM"
+                          }}</span>
+                        </label>
+                      </li>
+                    </ul>
+                  </div>
+                  <ErrorMessage name="horaCita" class="error-message" />
+                </div>
+              </div>
+            </div>
           </div>
           <!-- Comments -->
           <div class="comments">
@@ -303,16 +345,24 @@
               <textarea
                 id="comentariosCita"
                 v-model="comentariosCita"
-                placeholder="Comentarios ..."
+                placeholder="Ingresa información que deberiamos tener en cuenta o te gustaría que aplicaramos en la cita..."
               />
             </vee-field>
-
-            <span>Comentarios</span>
+            <label
+              for="comentariosCita"
+              :style="this.comentariosCita ? 'opacity: 1' : ''"
+              >Comentarios</label
+            >
           </div>
         </div>
-        <button id="btnAgendar" type="submit" class="btn-submit max-w-[300px]">
+        <button id="btnAgendar" type="submit" class="btn-primary">
           Agendar
         </button>
+        <span
+          class="error-message text-left w-full"
+          v-if="Object.keys(errors).length"
+          >Todos los campos * son necesarios.</span
+        >
       </vee-form>
     </div>
     <!-- Modal for new appointment confirmation -->
@@ -330,7 +380,6 @@
           >&#8203;</span
         >
 
-        <!-- Add margin if you want to see some of the overlay behind the modal-->
         <Transition
           enter-active-class="animate__animated animate__bounceIn"
           leave-active-class="animate__animated animate__bounceOut"
@@ -351,8 +400,8 @@
 
 <script>
 import { mapStores, mapActions } from "pinia";
-import useUserStore from "@/stores/user.js";
-import useSidebarStore from "@/stores/sidebar";
+import { useUserStore } from "@/stores/user.js";
+import useGeneralVariablesStore from "@/stores/generalVariables";
 import router from "@/router";
 import EsteticaImageSlider from "@/components/EsteticaImageSlider.vue";
 import CalendarEstetica from "@/components/CalendarEstetica.vue";
@@ -373,16 +422,14 @@ export default {
       nombreMascota: "",
       especieMascota: "",
       razaMascota: "",
-      servicioMascota: "",
+      servicioMascota: "Baño",
       fechaCita: "",
+      fechaCitaSpanish: "",
       horaCita: "",
       comentariosCita: "",
-      especieMascotaLabel: "Selecciona la especie...",
-      servicioPickedLabel: "Selecciona un servicio...",
-      segundoNumTelActive: false,
+      especieMascotaLabel: "",
       especieMascotaActive: false,
-      servicioSelectActive: false,
-      horasDisponibles: [],
+      availableHours: [],
 
       responseMessage: "",
       success: false,
@@ -404,15 +451,13 @@ export default {
     };
   },
   computed: {
-    ...mapStores(useUserStore, useSidebarStore),
+    ...mapStores(useUserStore, useGeneralVariablesStore),
   },
   methods: {
     ...mapActions(useUserStore, { getUserAccountInfo: "getUserAccountInfo" }),
     ...mapActions(useUserStore, { scheduleAppointment: "scheduleAppointment" }),
     ...mapActions(useUserStore, { getHourAvailability: "getHourAvailability" }),
-    isSegundoNumTelActive() {
-      this.segundoNumTelActive = !this.segundoNumTelActive;
-    },
+
     isEpecieMascotaActive(especie) {
       if (especie != undefined && typeof especie != "object") {
         this.especieMascota = especie;
@@ -420,29 +465,61 @@ export default {
       }
       this.especieMascotaActive = !this.especieMascotaActive;
     },
-    isServicioSelectActive(servicio) {
-      if (servicio != undefined && typeof servicio != "object")
-        this.servicioPickedLabel = servicio;
-      this.servicioSelectActive = !this.servicioSelectActive;
+    serviceInputIsChecked(e) {
+      const serviceInputChecked = document.getElementById(
+        e.target.getAttribute("for")
+      );
+      serviceInputChecked.checked = true;
+      this.servicioMascota = serviceInputChecked.value;
     },
-    toggleCalendarComp() {
-      this.sidebarStore.calendarEsteticaIsActive = true;
+    apptTimeInputIsChecked(e) {
+      const apptTimeInputChecked = document.getElementById(
+        e.target.getAttribute("for")
+      );
+      apptTimeInputChecked.checked = true;
+      this.horaCita = apptTimeInputChecked.value;
     },
     async datePicked(date) {
       this.fechaCita = date;
+      date = date.split("/");
+      date = `${date[2]}-${date[1]}-${date[0]}T00:00:00`;
+      const dateSpanish = new Date(date);
+      const spanishDateString = dateSpanish.toLocaleDateString("es-MX", {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+      });
+
+      this.fechaCitaSpanish = spanishDateString
+        .split(" ")
+        .map((word) => {
+          return word.charAt(0).toUpperCase() + word.slice(1);
+        })
+        .join(" ");
+
       const availableHoursRequest = await this.getHourAvailability(
         this.fechaCita
       );
-      this.horasDisponibles = availableHoursRequest.message;
+      this.availableHours = availableHoursRequest.message;
     },
     async newAppointment(values) {
+      let appTime = "PM";
       this.bgConfirmationModalIsOpen = true;
+      values.servicioMascota =
+        values.servicioMascota === "Baño"
+          ? 1
+          : values.servicioMascota === "Completo"
+          ? 2
+          : 3;
       const scheduleAppointmentRequest = await this.scheduleAppointment(values);
       if (!scheduleAppointmentRequest.success) {
         this.responseMessage = scheduleAppointmentRequest.message;
         this.ConfirmationModalIsOpen = false;
+      } else {
+        if (this.horaCita.split(":")[0] < 12) appTime = "AM";
+        this.responseMessage = `Has agendado una cita de ${this.servicioMascota} para ${this.nombreMascota}  el día ${this.fechaCitaSpanish} a las ${this.horaCita} ${appTime}. <br/><br/>
+        En unos momentos recibirás un correo electrónico confirmando los detalles de la cita.`;
       }
-      this.responseMessage = `${this.nombreMascota} tiene una cita de ${this.servicioPickedLabel}  el ${this.fechaCita} a las ${this.horaCita}.`;
       this.success = scheduleAppointmentRequest.success;
       this.ConfirmationModalIsOpen = true;
     },
@@ -478,39 +555,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.country-code-select {
-  div {
-    margin-right: 0 !important;
-  }
-  position: absolute;
-  z-index: 100;
-  top: 15px;
-  left: 10px;
-  border: 1px solid #dbddde;
-  border-radius: 6px;
-  background-color: #eceeef;
-
-  .country-code-options-container {
-    border-radius: 6px;
-    background-color: #eceeef;
-    .country-code-container {
-      display: flex;
-      align-items: center;
-      padding: 0 5px;
-      &:not(:first-child) {
-        display: none;
-        margin: 5px 0;
-      }
-      div {
-        margin: 0 0 0 5px !important;
-        line-height: 5px;
-      }
-    }
-  }
-}
-
 .animate__animated.animate__fadeIn,
 .animate__animated.animate__fadeOut {
   --animate-duration: 300ms;
+}
+#btnAgendar {
+  width: 100%;
+  margin: 0 0 20px;
 }
 </style>

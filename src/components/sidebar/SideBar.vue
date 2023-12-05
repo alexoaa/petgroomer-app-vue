@@ -11,15 +11,23 @@
     <li class="li-item">
       <CustomRouterLink
         to="/estetica"
-        text="Agendar cita"
+        text="Agendar una cita"
         svg="true"
         svgRef="paw"
       />
     </li>
-    <li class="li-item" v-if="this.userStore.isAuth">
+    <li class="li-item" v-if="this.userStore.isAuth && !this.userStore.isAdmin">
       <CustomRouterLink
         to="/mis-citas"
         text="Mis citas"
+        svg="true"
+        svgRef="calendar"
+      />
+    </li>
+    <li class="li-item" v-if="this.userStore.isAuth && this.userStore.isAdmin">
+      <CustomRouterLink
+        to="/admin/consultar-citas"
+        text="Consultar Citas"
         svg="true"
         svgRef="calendar"
       />
@@ -32,14 +40,13 @@
         svgRef="config-gear"
       />
     </li>
-    <li v-if="!this.userStore.isAuth" id="loginSiginBtn" class="li-item">
-      <!-- As this btn is only to open the modal, is not necessary to add the CustomRouterLink -->
-      <a href="#" @click.prevent="toggleAuthModal">
-        <svg>
-          <use href="@/assets/icons/icons.svg#login" />
-        </svg>
-        Iniciar sesión / Registrarse</a
-      >
+    <li v-if="!this.userStore.isAuth" id="loginSignBtn" class="li-item">
+      <CustomRouterLink
+        to="/iniciar-sesion"
+        text="Iniciar sesión / Registrarse"
+        svg="true"
+        svgRef="login"
+      />
     </li>
     <li v-if="this.userStore.isAuth" class="li-item">
       <button
@@ -60,7 +67,7 @@
 import { mapStores, mapWritableState, mapActions } from "pinia";
 
 import useGeneralVariablesStore from "@/stores/generalVariables";
-import useUserStore from "@/stores/user";
+import { useUserStore } from "@/stores/user";
 
 import CustomRouterLink from "./CustomRouterLink.vue";
 import router from "../../router";
@@ -78,7 +85,6 @@ export default {
   computed: {
     ...mapWritableState(useGeneralVariablesStore, ["sidebarIsOpen"]),
     ...mapWritableState(useGeneralVariablesStore, ["sidebarServiciosIsOpen"]),
-    ...mapWritableState(useGeneralVariablesStore, ["AuthModalIsOpen"]),
     ...mapStores(useUserStore, useGeneralVariablesStore),
 
     fullName() {
@@ -87,10 +93,7 @@ export default {
   },
   methods: {
     ...mapActions(useUserStore, ["logout"]),
-    toggleAuthModal() {
-      this.AuthModalIsOpen = !this.AuthModalIsOpen;
-      this.sidebarIsOpen = false;
-    },
+
     closeSession() {
       this.logout();
       this.sidebarIsOpen = false;
@@ -102,7 +105,6 @@ export default {
 
 <style lang="scss">
 #sidebar-content {
-  padding: 0 5px;
   width: 80%;
   position: absolute;
   top: 0;
@@ -113,26 +115,30 @@ export default {
   pointer-events: painted;
 
   .li-item {
-    border-bottom: 1px solid var(--lighter-main-color);
     display: flex;
     align-items: center;
     transition: color 0.1s;
-    color: var(--text-color);
+    color: var(--black-text-color);
     font-size: 1rem;
     width: 100%;
     text-align: left;
+    border-bottom: 1px solid var(--black-text-color);
+    span {
+      color: var(--black-text-color);
+    }
     a {
+      border-radius: 5px;
       font-weight: 500;
       width: 100%;
       display: flex;
       align-items: center;
-      padding: 1.25rem;
+      padding: 1rem 20px;
     }
     svg {
       width: 20px;
       height: 20px;
       margin-right: 10px;
-      fill: var(--text-color);
+      fill: var(--black-text-color);
     }
     .user-name {
       flex-wrap: wrap;
@@ -147,13 +153,21 @@ export default {
       }
     }
     .btnCerrarSesion {
+      border-radius: 5px;
+      font-weight: 500;
       width: 100%;
       display: flex;
       align-items: center;
-      padding: 1.25rem;
+      padding: 1rem 20px;
       border: none;
       transition: color 0.1s;
       font-weight: 700;
+      svg {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        fill: var(--black-text-color);
+      }
     }
   }
 }

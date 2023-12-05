@@ -3,16 +3,17 @@ import { defineStore } from "pinia";
 // Store for the general variables through the app
 export default defineStore("generalVariables", {
   state: () => ({
+    // General variables
+    isNavbarFixed: false,
+    homePageNavbarColor: false,
     // Sidebar variables
     sidebarIsOpen: false,
     sidebarServiciosIsOpen: false,
-
     //
     calendarEsteticaIsActive: false,
     calendarEsteticaIsFirst: false,
 
     // Modals Variables
-    AuthModalIsOpen: false,
     ConfirmationModalIsOpen: false,
   }),
   actions: {
@@ -22,12 +23,6 @@ export default defineStore("generalVariables", {
     },
 
     // Modals actions
-    openAuthModal() {
-      this.AuthModalIsOpen = true;
-    },
-    closeAuthModal() {
-      this.AuthModalIsOpen = false;
-    },
     openConfirmationModal() {
       this.ConfirmationModalIsOpen = true;
     },

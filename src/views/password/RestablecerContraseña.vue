@@ -1,16 +1,15 @@
 <template>
-  <div class="wrapper">
-    <div class="form-container">
-      <div class="recov-form-container">
-        <h2>Restablece tu contraseña</h2>
-        <div v-if="success">
-          <div class="div-recover text-left">
+  <div class="mt-[60px] flex justify-center">
+    <div class="recov-form-container">
+      <div v-if="success" class="valid-link">
+        <div v-if="!passResetSuccess">
+          <h1>Restablece tu contraseña</h1>
+          <h2>
             Ingresa tu nueva contraseña y al finalizar te enviaremos de vuelta
             para iniciar sesión.
-          </div>
+          </h2>
           <vee-form
             action="/register"
-            class="form-cita text-left"
             method="POST"
             :validation-schema="resetPassSchema"
             @submit="resetPass"
@@ -49,7 +48,6 @@
                 </div>
               </vee-field>
             </div>
-
             <!-- Confirm Password -->
             <div class="relative my-2 w-full">
               <label class="block text-sky-600 text-lg"
@@ -82,9 +80,7 @@
                 class="text-red-600"
               ></ErrorMessage>
             </div>
-
             <!-- Register button -->
-
             <div class="submit-container">
               <button type="submit" id="btnResetPass" class="btn-submit">
                 Restablecer contraseña
@@ -95,20 +91,29 @@
             </div>
           </vee-form>
         </div>
-        <div v-else>
-          <div class="form-cita-recov mb-6">
-            <div class="div-recover text-left">
-              El enlace es inválido, probablemente porque ya fue usado, por
-              favor haz un nuevo cambio de contraseña.
-            </div>
-            <router-link
-              :to="{ name: 'home' }"
-              class="a-login"
-              text="< Regresar a inicio de sesión"
-              @click="openAuthModal"
-            ></router-link>
-          </div>
+        <div v-else class="my-[100px] flex justify-center flex-wrap">
+          <h1 class="mb-[50px]">
+            {{ responseError }}
+          </h1>
+          <router-link
+            :to="{ name: 'login' }"
+            tabindex="0"
+            text="Iniciar sesion"
+            exact-active-class="no-active"
+            class="btn-primary"
+          />
         </div>
+      </div>
+      <div v-else class="invalid-link">
+        <div>
+          El enlace es inválido, probablemente porque ya fue usado, por favor
+          haz un nuevo cambio de contraseña.
+        </div>
+        <router-link
+          :to="{ name: 'login' }"
+          class="a-login"
+          text="< Regresar a inicio de sesión"
+        ></router-link>
       </div>
     </div>
   </div>
@@ -116,8 +121,7 @@
 
 <script>
 import { mapActions } from "pinia";
-import useModalsStore from "@/stores/modalsStore";
-import useUserStore from "@/stores/user";
+import { useUserStore } from "@/stores/user";
 
 export default {
   name: "RestablecerContraseña",
@@ -131,10 +135,10 @@ export default {
       },
       responseError: "",
       success: null,
+      passResetSuccess: false,
     };
   },
   props: ["user"],
-  computed: {},
   methods: {
     togglePass() {
       this.passFieldType =
@@ -145,16 +149,17 @@ export default {
         this.confPassFieldType === "text" ? "password" : "text";
     },
     async resetPass(values) {
-      console.log(values);
       values.user = this.user;
       values.token = this.$route.query.t;
       const resetPasswordRequest = await this.resetPassword(values);
-      console.log(resetPasswordRequest);
+      if (resetPasswordRequest.success) {
+        this.passResetSuccess = resetPasswordRequest.success;
+      }
+      this.responseError = resetPasswordRequest.message;
     },
     ...mapActions(useUserStore, {
       verifyResetLinkRequest: "verifyResetLinkRequest",
     }),
-    ...mapActions(useModalsStore, { openAuthModal: "openAuthModal" }),
     ...mapActions(useUserStore, { resetPassword: "resetPassword" }),
   },
   async beforeMount() {
@@ -167,12 +172,48 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.recov-form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 600px;
+
+  .valid-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 40px;
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 500;
+    }
+    h2 {
+      margin: 20px 0;
+    }
+    form {
+    }
+  }
+  .invalid-link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 40px 10px;
+    div {
+      margin-bottom: 30px;
+    }
+  }
+}
 .a-login {
   color: var(--dark-accent-color);
-  font-weight: bold;
-  letter-spacing: 0.6px;
+  font-weight: 600;
   font-size: 1.1em;
   margin-top: 15px;
+  &:hover {
+    font-weight: 900;
+  }
 }
 </style>

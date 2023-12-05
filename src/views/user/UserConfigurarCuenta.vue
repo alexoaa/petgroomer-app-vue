@@ -1,5 +1,5 @@
 <template>
-  <section class="flex justify-center h-screen">
+  <section class="flex justify-center py-[60px] lg:pb-[0] relative">
     <aside class="cuenta-aside hidden py-10 px-6">
       <div class="user-name">
         <span class="text-lg">Bienvenido</span>
@@ -15,7 +15,7 @@
             <router-link to="">Informacion de tu cuenta</router-link>
           </div>
         </li>
-        <li class="bottom-sidebar-btn">
+        <li>
           <div class="li-item">
             <button type="button" @click="this.closeSession()">
               Cerrar sesión
@@ -34,9 +34,7 @@
         <ul>
           <!-- Name -->
           <li class="relative my-4 w-full">
-            <label
-              class="block text-[var(--dark-accent-color)] text-lg"
-              for="name"
+            <label class="block text-[var(--accent-color)] text-lg" for="name"
               >Nombre</label
             >
             <div
@@ -56,7 +54,7 @@
           <!-- LastName -->
           <li class="relative my-4 w-full">
             <label
-              class="block text-[var(--dark-accent-color)] text-lg"
+              class="block text-[var(--accent-color)] text-lg"
               for="lastName"
               >Apellido</label
             >
@@ -77,9 +75,7 @@
 
           <!-- Email -->
           <li class="relative my-4 w-full">
-            <label
-              class="block text-[var(--dark-accent-color)] text-lg"
-              for="email"
+            <label class="block text-[var(--accent-color)] text-lg" for="email"
               >Correo electrónico</label
             >
             <div
@@ -93,9 +89,7 @@
 
           <!-- Phone -->
           <li class="relative my-4 w-full">
-            <label
-              class="block text-[var(--dark-accent-color)] text-lg"
-              for="phone"
+            <label class="block text-[var(--accent-color)] text-lg" for="phone"
               >Teléfono</label
             >
             <div
@@ -121,91 +115,69 @@
         </ul>
         <div class="mt-3">
           <span
-            class="text-[var(--dark-accent-color)] font-semibold text-lg hover:cursor-pointer hover:text-[var(--dark-accent-color-100)]"
+            class="text-[var(--accent-color)] font-semibold text-lg hover:cursor-pointer hover:text-[var(--accent-color-100)]"
             @click="changePassword"
             >Cambiar contraseña</span
           >
         </div>
       </vee-form>
     </section>
-  </section>
-  <!-- Modal for save changes confirmation -->
-  <div
-    class="fixed z-[100] inset-0 overflow-hidden pt-4 px-4 pb-16"
-    v-if="bgConfirmationModalIsOpen"
-  >
+    <!-- Modal for save changes confirmation -->
     <div
-      class="flex items-center justify-center min-h-screen text-center sm:block sm:p-0"
+      class="fixed z-[100] inset-0 overflow-hidden pt-4 px-4 pb-16"
+      v-if="bgConfirmationModalIsOpen"
     >
-      <div class="fixed inset-0 transition-opacity">
-        <div
-          class="absolute inset-0 bg-[var(--lighter-main-color)] opacity-75"
-        ></div>
-      </div>
-
-      <!-- This element is to trick the browser into centering the modal contents. -->
-      <span class="hidden sm:inline-block sm:align-middle sm:h-screen"
-        >&#8203;</span
-      >
-
       <div
-        class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle"
+        class="flex items-center justify-center min-h-screen text-center sm:block sm:p-0"
       >
-        <!-- Add margin if you want to see some of the overlay behind the modal-->
-        <Transition
-          enter-active-class="animate__animated animate__bounceIn"
-          leave-active-class="animate__animated animate__bounceOut"
+        <div class="fixed inset-0 transition-opacity">
+          <div
+            class="absolute inset-0 bg-[var(--background-dark-color)] opacity-75"
+          ></div>
+        </div>
+
+        <!-- This element is to trick the browser into centering the modal contents. -->
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen"
+          >&#8203;</span
         >
-          <ConfirmationModal
-            v-if="this.modalsStore.ConfirmationModalIsOpen"
-            :responseMessage="responseMessage"
-            :success="success"
-            @closing-modal-timeOut="clearModalsTimeOut"
-            @bgCloseConfirmationModal="bgConfirmationModalIsOpen = false"
+
+        <div
+          class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle"
+        >
+          <!-- Add margin if you want to see some of the overlay behind the modal-->
+          <Transition
+            enter-active-class="animate__animated animate__bounceIn"
+            leave-active-class="animate__animated animate__bounceOut"
+          >
+            <ConfirmationModal
+              v-if="this.generalVariablesStore.ConfirmationModalIsOpen"
+              :responseMessage="responseMessage"
+              :success="success"
+              @closing-modal-timeOut="clearModalsTimeOut"
+              @bgCloseConfirmationModal="bgConfirmationModalIsOpen = false"
+            />
+          </Transition>
+        </div>
+        <!-- Change password modal -->
+        <Transition
+          enter-active-class="animate__animated animate__fadeInDown"
+          leave-active-class="animate__animated animate__fadeOutUp"
+        >
+          <ChangePasswordModal
+            v-if="ChangePasswordModalIsOpen"
+            @close-changePass-modal="closePasswordModal"
+            class="inline-block align-bottom bg-[var(--background-main-color)] rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
           />
         </Transition>
       </div>
     </div>
-  </div>
-
-  <!-- Modal for change password -->
-  <div
-    class="fixed z-[100] inset-0 overflow-hidden pt-4 px-4 pb-16"
-    v-if="bgChangePasswordModalIsOpen"
-  >
-    <div
-      class="flex items-center justify-center min-h-screen text-center sm:block sm:p-0"
-    >
-      <div class="fixed inset-0 transition-opacity">
-        <div
-          class="absolute inset-0 bg-[var(--lighter-main-color)] opacity-75"
-        ></div>
-      </div>
-
-      <!-- This element is to trick the browser into centering the modal contents. -->
-      <span class="hidden sm:inline-block sm:align-middle sm:h-screen"
-        >&#8203;</span
-      >
-
-      <!-- Add margin if you want to see some of the overlay behind the modal-->
-      <Transition
-        enter-active-class="animate__animated animate__fadeInDown"
-        leave-active-class="animate__animated animate__fadeOutUp"
-      >
-        <ChangePasswordModal
-          v-if="ChangePasswordModalIsOpen"
-          @close-changePass-modal="closePasswordModal"
-          class="inline-block align-bottom bg-[var(--background-main-color)] rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
-        />
-      </Transition>
-    </div>
-  </div>
+  </section>
 </template>
 
 <script>
 import { mapActions, mapStores } from "pinia";
-import useUserStore from "@/stores/user";
-import useModalsStore from "@/stores/modalsStore";
+import { useUserStore } from "@/stores/user";
+import useGeneralVariablesStore from "@/stores/generalVariables";
 import ConfirmationModal from "@/components/account/ConfirmationModal.vue";
 import ChangePasswordModal from "@/components/account/ChangePasswordModal.vue";
 import router from "@/router";
@@ -228,7 +200,6 @@ export default {
       bgConfirmationModalIsOpen: false,
       closingModalsTimeOut: null,
       ChangePasswordModalIsOpen: false,
-      bgChangePasswordModalIsOpen: false,
     };
   },
   components: {
@@ -237,6 +208,7 @@ export default {
   },
   async mounted() {
     const userInfoRequest = await this.getUserAccountInfo();
+    console.log(userInfoRequest);
     this.name = userInfoRequest.data.name;
     this.lastName = userInfoRequest.data.lastName;
     this.email = userInfoRequest.data.email;
@@ -247,10 +219,10 @@ export default {
     ...mapActions(useUserStore, {
       updateUserAccountInfo: "updateUserAccountInfo",
     }),
-    ...mapActions(useModalsStore, {
+    ...mapActions(useGeneralVariablesStore, {
       openConfirmationModal: "openConfirmationModal",
     }),
-    ...mapActions(useModalsStore, {
+    ...mapActions(useGeneralVariablesStore, {
       closeConfirmationModal: "closeConfirmationModal",
     }),
     ...mapActions(useUserStore, { logout: "logout" }),
@@ -277,7 +249,7 @@ export default {
       }, 2500);
     },
     changePassword() {
-      this.bgChangePasswordModalIsOpen = true;
+      this.bgConfirmationModalIsOpen = true;
       setTimeout(() => {
         this.ChangePasswordModalIsOpen = true;
       }, 50);
@@ -285,7 +257,7 @@ export default {
     closePasswordModal() {
       this.ChangePasswordModalIsOpen = false;
       setTimeout(() => {
-        this.bgChangePasswordModalIsOpen = false;
+        this.bgConfirmationModalIsOpen = false;
       }, 200);
     },
     closeSession() {
@@ -297,7 +269,7 @@ export default {
     fullName() {
       return `${this.userStore.userName} ${this.userStore.userLastName} `;
     },
-    ...mapStores(useModalsStore, useUserStore),
+    ...mapStores(useGeneralVariablesStore, useUserStore),
   },
 };
 </script>
@@ -340,9 +312,9 @@ export default {
     overflow: hidden;
     width: 20%;
     min-width: 250px;
-    box-shadow: 0 0 20px -7px var(--lighter-main-color);
+    box-shadow: 0 0 20px -7px var(--gray-color-100);
     .user-name {
-      border-bottom: 1.5px solid var(--dark-accent-color);
+      border-bottom: 1.5px solid var(--accent-color);
       padding-bottom: 1rem;
       margin-bottom: 1.75rem;
       span:not(:last-of-type) {
@@ -358,7 +330,7 @@ export default {
         padding: 10px 0;
         &:hover {
           font-weight: bold;
-          color: var(--dark-accent-color);
+          color: var(--accent-color);
         }
       }
     }

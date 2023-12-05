@@ -14,7 +14,7 @@
           <!-- Password -->
           <li class="relative my-4 w-full">
             <label
-              class="block text-[var(--dark-accent-color)] text-base"
+              class="block text-[var(--accent-color)] text-base"
               for="currentPassword"
               >Contraseña actual</label
             >
@@ -61,7 +61,7 @@
           <!-- New Password -->
           <li class="relative my-4 w-full">
             <label
-              class="block text-[var(--dark-accent-color)] text-base"
+              class="block text-[var(--accent-color)] text-base"
               for="newPassword"
               >Nueva contraseña</label
             >
@@ -108,7 +108,7 @@
           <!-- Confirm Password -->
           <li class="relative my-4 w-full">
             <label
-              class="block text-[var(--dark-accent-color)] text-base"
+              class="block text-[var(--accent-color)] text-base"
               for="confirmPassword"
               >Confirmar contraseña</label
             >
@@ -160,7 +160,7 @@
             <button
               type="submit"
               id="btnGuardarPasswordChanges"
-              class="btn-terciary"
+              class="btn-terciary-small"
               tabindex="3"
               @click="this.$emit('close-changePass-modal')"
             >
@@ -176,12 +176,11 @@
       v-if="bgConfirmationModalIsOpen"
     >
       <div
-        class="absolute inset-0 bg-[var(--lighter-main-color)] opacity-75"
+        class="absolute inset-0 bg-[var(--background-dark-color)] opacity-75"
       ></div>
       <div
-        class="inline-block align-bottom bg-[var(--background-main-color)] rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle"
+        class="inline-block align-bottom rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle"
       >
-        <!-- Add margin if you want to see some of the overlay behind the modal-->
         <Transition
           enter-active-class="animate__animated animate__bounceIn"
           leave-active-class="animate__animated animate__bounceOut"
@@ -201,8 +200,8 @@
 
 <script>
 import { mapActions, mapStores } from "pinia";
-import useModalsStore from "@/stores/modalsStore";
-import useUserStore from "@/stores/user";
+import useGeneralVariablesStore from "@/stores/generalVariables";
+import { useUserStore } from "@/stores/user";
 import ConfirmationModal from "@/components/account/ConfirmationModal.vue";
 
 import { onClickOutside } from "@vueuse/core";
@@ -262,7 +261,7 @@ export default {
       this.confPassFieldType =
         this.confPassFieldType === "text" ? "password" : "text";
     },
-    ...mapActions(useModalsStore, {
+    ...mapActions(useGeneralVariablesStore, {
       closeChangePasswordModal: "closeChangePasswordModal",
     }),
     ...mapActions(useUserStore, {
@@ -270,7 +269,7 @@ export default {
     }),
   },
   computed: {
-    ...mapStores(useModalsStore),
+    ...mapStores(useGeneralVariablesStore),
   },
   mounted() {
     const modalTargetChangePass = ref(this.$refs.modalTargetChangePass);

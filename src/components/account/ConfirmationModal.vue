@@ -1,6 +1,6 @@
 <template>
   <div
-    class="py-5 text-center px-6 w-[300px] min-h-[250px] max-h-[400px] max-w-[350px] flex flex-wrap flex-col justify-around items-center"
+    class="py-5 text-center px-6 min-w-[300px] min-h-[250px] max-h-[650px] max-w-[600px] flex flex-wrap flex-col justify-around items-center bg-[var(--background-main-color)]"
     ref="modalTarget"
   >
     <div v-if="success === true" class="mt-4">
@@ -40,8 +40,8 @@
         <span class="font-bold text-[1.2rem]">¡Error!</span>
       </div>
     </div>
-    <div class="block text-[1.1rem]">
-      <span>{{ this.responseMessage }}</span>
+    <div class="block text-[1.1rem] pb-4">
+      <span id="responseMsg"></span>
     </div>
     <button
       v-if="closeConfirmationButton"
@@ -56,7 +56,7 @@
 
 <script>
 import { mapActions, mapStores } from "pinia";
-import useModalsStore from "@/stores/modalsStore";
+import useGeneralVariablesStore from "@/stores/generalVariables";
 
 import { onClickOutside } from "@vueuse/core";
 import { ref } from "vue";
@@ -77,7 +77,7 @@ export default {
     "close-confirmation-modal-button",
   ],
   methods: {
-    ...mapActions(useModalsStore, {
+    ...mapActions(useGeneralVariablesStore, {
       closeConfirmationModal: "closeConfirmationModal",
     }),
     closeConfiModal() {
@@ -85,13 +85,16 @@ export default {
     },
   },
   computed: {
-    ...mapStores(useModalsStore),
+    ...mapStores(useGeneralVariablesStore),
     closeButtonActive() {
       return this.closeButton;
     },
   },
   mounted() {
     const modalTarget = ref(this.$refs.modalTarget);
+    console.log(this.responseMessage.split("."));
+    document.getElementById("responseMsg").innerHTML = this.responseMessage;
+
     onClickOutside(modalTarget, () => {
       this.closeConfirmationModal();
       this.$emit("bgCloseConfirmationModal");
@@ -102,11 +105,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-:root {
-  --color-red: #f86;
-  --circle-size: 60px;
-}
-
 .wrapper-conf {
   display: flex;
   justify-content: center;
@@ -124,6 +122,7 @@ export default {
 .checkmark {
   width: 56px;
   height: 56px;
+  scale: 1.3;
   border-radius: 50%;
   display: block;
   stroke-width: 2;
@@ -164,7 +163,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 2px 10px 10px rgba(#000, 0.05);
 }
 
 .circle,

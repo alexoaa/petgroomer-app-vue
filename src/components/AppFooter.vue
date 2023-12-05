@@ -1,234 +1,249 @@
 <template>
   <footer class="text-center border-t-2 border-slate-600 py-10">
-    <div class="flex flex-wrap items-center justify-center">
+    <section class="flex flex-wrap items-center justify-center">
       <div class="logo-redes-container">
-        <img
-          class="w-[70%] h-auto mb-4"
-          src="@/assets/images/logo-footer.png"
-        />
+        <router-link class="footer-logo" :to="{ name: 'home' }">
+          <img
+            class="w-[70%] h-auto mb-4"
+            src="@/assets/images/logo-footer.png"
+          />
+        </router-link>
         <p class="block w-full">Síguenos en:</p>
-        <p class="block w-full">
-          <span class="filter-contrast-1"
-            ><a target="_blank" rel="nofollow noopener" href="#" class=""
-              ><i class="fab fa-youtube fa-2x"></i></a
-          ></span>
-          <span class="filter-contrast-1"
-            ><a target="_blank" rel="nofollow noopener" href="#" class=""
-              ><i class="fab fa-instagram fa-2x"></i></a
-          ></span>
-          <span class="filter-contrast-1"
-            ><a target="_blank" rel="nofollow noopener" href="#" class=""
-              ><i class="fab fa-facebook-square fa-2x"></i></a
-          ></span>
-        </p>
+        <ul class="block w-full">
+          <li>
+            <a href="#">
+              <svg><use href="@/assets/icons/icons.svg#facebook-logo" /></svg>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <svg><use href="@/assets/icons/icons.svg#instagram-logo" /></svg>
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <svg><use href="@/assets/icons/icons.svg#tiktok-logo" /></svg>
+            </a>
+          </li>
+        </ul>
       </div>
       <div class="footer-info-section-container">
         <div class="footer-info-section">
           <div
             class="p-title-footer"
-            @click="toggleAcerca"
-            :class="this.acercaVisible ? 'p-font-bold' : ''"
+            @click.stop="toggleAcerca"
+            ref="acercaSection"
+            :class="acercaVisible ? 'p-font-bold' : ''"
           >
-            <span>ACERCA DE DOGBARBER</span
-            ><span :class="this.acercaVisible ? 'rotate-90' : ''"
-              ><i
-                id="arrow_footer_about"
-                class="fas color_purple status_footer_arrow fa-chevron-right"
-              ></i
-            ></span>
+            <span>ACERCA DE DOGBARBER</span>
+            <svg :class="acercaVisible ? 'rotate-180' : ''">
+              <use href="@/assets/icons/icons.svg#chevronDown" />
+            </svg>
           </div>
-          <div
+          <ul
             class="text-left px-[30px] py[15px] info-section-container"
-            :class="this.acercaVisible ? 'info-visible' : ''"
-            id="acercaFSection"
+            :class="acercaVisible ? 'info-visible' : ''"
           >
-            <a href="#"><div class="p-text-footer">Sobre DogBarber</div></a>
-            <a href="#"><div class="p-text-footer">Blog</div></a>
-            <a href="#"
-              ><div class="p-text-footer">Términos y condiciones</div></a
-            >
-          </div>
+            <li>
+              <router-link
+                class="p-text-footer"
+                :to="{ name: 'aboutUs' }"
+                text="Sobre DogBarber"
+              />
+            </li>
+            <li>
+              <router-link
+                class="p-text-footer"
+                :to="{ name: 'aboutUs' }"
+                text="Blog"
+              />
+            </li>
+            <li>
+              <router-link
+                class="p-text-footer"
+                :to="{ name: 'aboutUs' }"
+                text="Términos y condiciones"
+              />
+            </li>
+          </ul>
         </div>
         <div class="footer-info-section">
           <div
             class="p-title-footer"
             @click="toggleInteres"
-            :class="this.interesVisible ? 'p-font-bold' : ''"
+            ref="interesSection"
+            :class="interesVisible ? 'p-font-bold' : ''"
           >
-            <span>LINKS DE INTERÉS</span
-            ><span :class="this.interesVisible ? 'rotate-90' : ''"
-              ><i
-                id="arrow_footer_about"
-                class="fas color_purple status_footer_arrow fa-chevron-right"
-              ></i
-            ></span>
+            <span>LINKS DE INTERÉS</span>
+            <svg :class="interesVisible ? 'rotate-180' : ''">
+              <use href="@/assets/icons/icons.svg#chevronDown" />
+            </svg>
           </div>
-          <div
+          <ul
             class="text-left px-[30px] py[15px] info-section-container"
-            :class="this.interesVisible ? 'info-visible' : ''"
-            id="interesFSection"
+            :class="interesVisible ? 'info-visible' : ''"
           >
-            <a href="#"
-              ><div class="p-text-footer">Preguntas frecuentes</div></a
-            >
-            <a href="#"
-              ><div class="p-text-footer">Política de Privacidad</div></a
-            >
-            <a href="#"
-              ><div class="p-text-footer">Políticas de Entrega</div></a
-            >
-          </div>
+            <li>
+              <router-link
+                class="p-text-footer"
+                :to="{ name: 'aboutUs' }"
+                text="Preguntas frecuentes"
+              />
+            </li>
+            <li>
+              <router-link
+                class="p-text-footer"
+                :to="{ name: 'aboutUs' }"
+                text="Política de Privacidad"
+              />
+            </li>
+          </ul>
         </div>
         <div class="footer-info-section">
           <div
             class="p-title-footer"
             @click="toggleInfo"
-            :class="this.infoVisible ? 'p-font-bold' : ''"
+            ref="infoSection"
+            :class="infoVisible ? 'p-font-bold' : ''"
           >
-            <span>INFORMACIÓN</span
-            ><span :class="this.infoVisible ? 'rotate-90' : ''"
-              ><i
-                id="arrow_footer_about"
-                class="fas color_purple status_footer_arrow fa-chevron-right"
-              ></i
-            ></span>
+            <span>INFORMACIÓN</span>
+            <svg :class="infoVisible ? 'rotate-180' : ''">
+              <use href="@/assets/icons/icons.svg#chevronDown" />
+            </svg>
           </div>
-          <div
+          <ul
             class="text-left px-[30px] py[15px] info-section-container"
-            :class="this.infoVisible ? 'info-visible' : ''"
-            id="infoFSection"
+            :class="infoVisible ? 'info-visible' : ''"
           >
-            <div class="p-text-footer">Teléfono: +525555555555</div>
-            <div class="p-text-footer">servicioalcliente@dogbarber.com.mx</div>
-            <div class="p-text-footer">CDMX y Área Metropolitana, México</div>
-          </div>
-        </div>
-
-        <div class="footer-subscribe-section">
-          <div class="block mb-3 font-medium">
-            Copyright © 2023 Todos los derechos reservados. DogBarber.
-          </div>
+            <li class="p-text-footer">Teléfono: +525555555555</li>
+            <li class="p-text-footer">soporte@dogbarber.com.mx</li>
+            <li class="p-text-footer">CDMX y Área Metropolitana, México</li>
+          </ul>
         </div>
       </div>
-
       <!-- Footer for large screens -->
       <div class="footer-info-section-container-l">
-        <div class="footer-info-section">
-          <span class="block mb-3 font-bold">ACERCA DE DOGBARBER</span>
-          <a href="#"><div class="p-text-footer">Sobre DogBarber</div></a>
-          <a href="#"><div class="p-text-footer">Blog</div></a>
-          <a href="#"
-            ><div class="p-text-footer">Términos y condiciones</div></a
-          >
-        </div>
-        <div class="footer-info-section">
-          <span class="block mb-3 font-bold">LINKS DE INTERÉS</span>
-          <a href="#"><div class="p-text-footer">Preguntas frecuentes</div></a>
-          <a href="#"
-            ><div class="p-text-footer">Política de Privacidad</div></a
-          >
-          <a href="#"><div class="p-text-footer">Políticas de Entrega</div></a>
-        </div>
-        <div class="footer-info-section">
-          <span class="block mb-3 font-bold">INFORMACIÓN</span>
-          <div class="p-text-footer">Teléfono: +525555555555</div>
-          <div class="p-text-footer">servicioalcliente@dogbarber.com.mx</div>
-          <div class="p-text-footer">CDMX y Área Metropolitana, México</div>
-        </div>
+        <ul class="footer-info-section">
+          <li>
+            <span class="block mb-3 font-bold">ACERCA DE DOGBARBER</span>
+          </li>
+          <li>
+            <router-link
+              class="p-text-footer"
+              :to="{ name: 'aboutUs' }"
+              text="Sobre DogBarber"
+            />
+          </li>
+          <li>
+            <router-link
+              class="p-text-footer"
+              :to="{ name: 'aboutUs' }"
+              text="Blog"
+            />
+          </li>
+          <li>
+            <router-link
+              class="p-text-footer"
+              :to="{ name: 'aboutUs' }"
+              text="Términos y condiciones"
+            />
+          </li>
+        </ul>
+        <ul class="footer-info-section">
+          <li>
+            <span class="block mb-3 font-bold">LINKS DE INTERÉS</span>
+          </li>
+          <li>
+            <router-link
+              class="p-text-footer"
+              :to="{ name: 'aboutUs' }"
+              text="Preguntas frecuentes"
+            />
+          </li>
+          <li>
+            <router-link
+              class="p-text-footer"
+              :to="{ name: 'aboutUs' }"
+              text="Política de Privacidad"
+            />
+          </li>
+        </ul>
+        <ul class="footer-info-section">
+          <li class="block mb-3 font-bold">INFORMACIÓN</li>
+          <li class="p-text-footer">Teléfono: +525555555555</li>
+          <li class="p-text-footer">soporte@dogbarber.com.mx</li>
+          <li class="p-text-footer">CDMX y Área Metropolitana, México</li>
+        </ul>
       </div>
+    </section>
+    <div class="footer-subscribe-section">
+      <p>Copyright © 2023. Todos los derechos reservados DogBarber.</p>
     </div>
   </footer>
 </template>
 
-<script>
+<script setup>
 import { onClickOutside } from "@vueuse/core";
+import { ref, onMounted } from "vue";
 
-export default {
-  name: "AppFooter",
-  components: {},
-  data() {
-    return {
-      acercaVisible: false,
-      acercaFirstTime: true,
-      acercaSection: document.getElementById("acercaFSection"),
-      interesVisible: false,
-      interesFirstTime: true,
-      interesSection: document.getElementById("interesFSection"),
-      infoVisible: false,
-      infoFirstTime: true,
-      infoSection: document.getElementById("infoFSection"),
-    };
-  },
-  computed: {},
-  methods: {
-    toggleAcerca(event) {
-      this.acercaVisible = !this.acercaVisible;
-      if (this.acercaFirstTime) {
-        this.acercaFirstTime = false;
-        onClickOutside(
-          event.target.nextElementSibling,
-          () => {
-            if (this.acercaVisible) {
-              this.acercaVisible = false;
-              this.infoVisible = false;
-              this.interesVisible = false;
-            }
-          },
-          {
-            ignore: [this.interesSection, this.infoSection],
-          }
-        );
-      }
-    },
-    toggleInfo(event) {
-      this.infoVisible = !this.infoVisible;
-      if (this.infoFirstTime) {
-        this.infoFirstTime = false;
-        onClickOutside(
-          event.target.nextElementSibling,
-          () => {
-            if (this.infoVisible) {
-              this.infoVisible = false;
-              this.acercaVisible = false;
-              this.interesVisible = false;
-            }
-          },
-          {
-            ignore: [this.interesSection, this.acercaSection],
-          }
-        );
-      }
-    },
-    toggleInteres(event) {
-      this.interesVisible = !this.interesVisible;
-      if (this.interesFirstTime) {
-        this.interesFirstTime = false;
-        onClickOutside(
-          event.target.nextElementSibling,
-          () => {
-            if (this.interesVisible) {
-              this.interesVisible = false;
-              this.infoVisible = false;
-              this.acercaVisible = false;
-            }
-          },
-          {
-            ignore: [this.infoSection, this.acercaSection],
-          }
-        );
-      }
-    },
-  },
+const acercaVisible = ref(false);
+const interesVisible = ref(false);
+const infoVisible = ref(false);
+const acercaSection = ref(null);
+const interesSection = ref(null);
+const infoSection = ref(null);
+
+const toggleAcerca = () => {
+  acercaVisible.value = !acercaVisible.value;
 };
+const toggleInteres = () => {
+  interesVisible.value = !interesVisible.value;
+};
+const toggleInfo = () => {
+  infoVisible.value = !infoVisible.value;
+};
+
+onMounted(() => {
+  onClickOutside(acercaSection, () => {
+    if (acercaVisible.value) acercaVisible.value = false;
+  });
+  onClickOutside(interesSection, () => {
+    if (interesVisible.value) interesVisible.value = false;
+  });
+  onClickOutside(infoSection, () => {
+    if (infoVisible.value) infoVisible.value = false;
+  });
+});
 </script>
 
-<style>
+<style lang="scss" scoped>
 .logo-redes-container {
   width: 100%;
+  max-width: 600px;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 20px;
+  .footer-logo {
+    margin-bottom: 10px;
+    img {
+      margin: 0 auto;
+    }
+  }
+  ul {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    margin-top: 5px;
+    svg {
+      width: 30px;
+      height: 30px;
+      transition: scale 200ms ease-in-out;
+      &:hover {
+        scale: 1.1;
+      }
+    }
+  }
 }
 .footer-info-section-container {
   width: 100%;
@@ -237,20 +252,20 @@ export default {
   justify-content: center;
 }
 .info-section-container {
-  transition: all 0.2s ease-in-out;
+  transition: height 0.2s ease-in-out;
   overflow: hidden;
   height: 0;
-}
-.info-section-container a:hover {
-  font-weight: bold;
+  a:hover {
+    font-weight: bold;
+  }
 }
 .footer-info-section {
   margin-top: 0.5rem;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
   width: 80%;
-}
-.footer-info-section a:hover {
-  color: #535252;
+  a:hover {
+    color: red;
+  }
 }
 .p-title-footer {
   padding: 15px 30px;
@@ -258,43 +273,42 @@ export default {
   justify-content: space-between;
   align-items: center;
   cursor: pointer;
-}
-.p-title-footer span:first-of-type {
-  width: 70%;
-  text-align: left;
+  span {
+    display: block;
+    width: 100%;
+    text-align: left;
+  }
+  svg {
+    width: 30px;
+    height: 30px;
+    transition: scale 0.2s ease-in-out, rotation 0.2s ease-in-out;
+    stroke: var(--black-text-color);
+  }
 }
 .p-text-footer {
   margin-bottom: 14px;
   font-size: 14px;
+  display: block;
 }
 .info-visible {
   height: 114px;
 }
 .p-font-bold {
-  font-weight: bold;
+  span {
+    font-weight: bold;
+  }
+  svg {
+    scale: 1.5;
+  }
 }
 .footer-info-section-container-l {
   display: none;
 }
 .footer-subscribe-section {
-  margin-top: 40px;
-}
-.input-suscribe {
-  border: 1px solid #212121;
-  border-radius: 5px;
-  margin-bottom: 1rem;
-  display: flex;
-  justify-content: space-between;
-  padding: 0 10px;
-}
-.input-suscribe input {
-  display: inline-block;
-  width: 100%;
-  padding: 10px;
-  outline: none;
+  margin: 40px 20px 0;
 }
 
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1024px) {
   .logo-redes-container {
     max-width: 250px;
   }
@@ -315,11 +329,12 @@ export default {
     flex-grow: 1;
     flex-shrink: 1;
     max-width: 200px;
+    .p-text-footer {
+      display: block;
+    }
   }
-  .input-suscribe {
-    border: 1px solid #212121;
-    border-radius: 5px;
-    margin-bottom: 1rem;
+  .footer-subscribe-section {
+    margin-top: 0;
   }
 }
 </style>
