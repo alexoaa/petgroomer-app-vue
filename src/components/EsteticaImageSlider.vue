@@ -30,19 +30,19 @@ export default {
     return {
       slides: [
         {
-          src: `src/assets/images/EsteticaCarousel/imageSlider.avif`,
+          src: `src/assets/images/EsteticaCarousel/imageSlider.webp`,
           alt: `Image 1`,
         },
         {
-          src: `src/assets/images/EsteticaCarousel/imageSlider2.avif`,
+          src: `src/assets/images/EsteticaCarousel/imageSlider2.webp`,
           alt: `Image 2`,
         },
         {
-          src: `src/assets/images/EsteticaCarousel/imageSlider1.avif`,
+          src: `src/assets/images/EsteticaCarousel/imageSlider1.webp`,
           alt: `Image 3`,
         },
         {
-          src: `src/assets/images/EsteticaCarousel/imageSlider3.avif`,
+          src: `src/assets/images/EsteticaCarousel/imageSlider3.webp`,
           alt: `Image 4`,
         },
       ],
