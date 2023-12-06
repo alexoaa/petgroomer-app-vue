@@ -88,6 +88,7 @@
         </div>
         <div class="feature-image">
           <img
+            loading="lazy"
             src="@/assets/images/general/feature-image.webp"
             alt="Características de DogBarber"
           />
@@ -100,6 +101,7 @@
         <ul class="ul-services">
           <li class="li-services">
             <img
+              loading="lazy"
               src="@/assets/images/general/service-bath.jpg"
               alt="Descripción"
             />
@@ -113,6 +115,7 @@
           </li>
           <li class="li-services">
             <img
+              loading="lazy"
               src="@/assets/images/general/service-hair-trim.jpg"
               alt="Descripción"
             />
@@ -129,6 +132,7 @@
 
           <li class="li-services">
             <img
+              loading="lazy"
               src="@/assets/images/general/service-hair-brush.jpg"
               alt="Descripción"
             />
