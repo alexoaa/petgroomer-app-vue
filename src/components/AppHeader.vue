@@ -65,7 +65,7 @@
           v-if="this.userStore.isAuth"
         >
           <svg>
-            <use href="@/assets/icons/icons.svg#user-circle" />
+            <use href="/icons/icons.svg#user-circle" />
           </svg>
           <div class="hidden md:block ml-2">
             <span>{{ this.userStore.userName }}</span>

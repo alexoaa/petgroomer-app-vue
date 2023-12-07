@@ -64,10 +64,10 @@
                 class="w-[25px] h-[25px] fill-[var(--text-color)]"
                 v-if="this.passFieldType === 'text'"
               >
-                <use href="@/assets/icons/icons.svg#eye" />
+                <use href="/icons/icons.svg#eye" />
               </svg>
               <svg class="w-[25px] h-[25px] fill-[var(--text-color)]" v-else>
-                <use href="@/assets/icons/icons.svg#eye-slash" />
+                <use href="/icons/icons.svg#eye-slash" />
               </svg>
             </div>
           </div>

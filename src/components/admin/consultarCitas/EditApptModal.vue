@@ -4,7 +4,7 @@
   >
     <div class="close-modal-button">
       <button type="button" @click="closeEditApptDetails">
-        <svg><use href="@/assets/icons/icons.svg#cross" /></svg>
+        <svg><use href="/icons/icons.svg#cross" /></svg>
       </button>
     </div>
     <h1 class="text-2xl font-bold w-full text-center py-4">

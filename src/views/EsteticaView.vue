@@ -116,7 +116,7 @@
                             : ''
                         "
                       >
-                        <use href="@/assets/icons/icons.svg#chevronDown" />
+                        <use href="/icons/icons.svg#chevronDown" />
                       </svg>
                     </label>
                     <ul
@@ -199,7 +199,7 @@
                   @keyup.enter="serviceInputIsChecked"
                 >
                   <svg>
-                    <use href="@/assets/icons/icons.svg#bath" />
+                    <use href="/icons/icons.svg#bath" />
                   </svg>
                   <span>Solo Baño</span>
                 </label>
@@ -218,7 +218,7 @@
                   @keyup.enter="serviceInputIsChecked"
                 >
                   <svg>
-                    <use href="@/assets/icons/icons.svg#bathHaircut" />
+                    <use href="/icons/icons.svg#bathHaircut" />
                   </svg>
                   <span>Baño y Corte</span>
                 </label>
@@ -237,7 +237,7 @@
                   @keyup.enter="serviceInputIsChecked"
                 >
                   <svg>
-                    <use href="@/assets/icons/icons.svg#brush" />
+                    <use href="/icons/icons.svg#brush" />
                   </svg>
                   <span>Cepillado / Deslanado</span>
                 </label>
@@ -248,32 +248,32 @@
               <ul>
                 <li>
                   <svg>
-                    <use href="@/assets/icons/icons.svg#tick" />
+                    <use href="/icons/icons.svg#tick" />
                   </svg>
                   <span>Shampoo natural y de limpieza profunda </span>
                 </li>
                 <li>
-                  <svg><use href="@/assets/icons/icons.svg#tick" /></svg>
+                  <svg><use href="/icons/icons.svg#tick" /></svg>
                   <span> Fragancia </span>
                 </li>
                 <li>
-                  <svg><use href="@/assets/icons/icons.svg#tick" /></svg>
+                  <svg><use href="/icons/icons.svg#tick" /></svg>
                   <span>Limpieza de las glándulas anales </span>
                 </li>
                 <li>
-                  <svg><use href="@/assets/icons/icons.svg#tick" /></svg>
+                  <svg><use href="/icons/icons.svg#tick" /></svg>
                   <span> Secado </span>
                 </li>
                 <li>
-                  <svg><use href="@/assets/icons/icons.svg#tick" /></svg>
+                  <svg><use href="/icons/icons.svg#tick" /></svg>
                   <span> Limpieza de oídos </span>
                 </li>
                 <li>
-                  <svg><use href="@/assets/icons/icons.svg#tick" /></svg>
+                  <svg><use href="/icons/icons.svg#tick" /></svg>
                   <span> Corte de uñas </span>
                 </li>
                 <li>
-                  <svg><use href="@/assets/icons/icons.svg#tick" /></svg>
+                  <svg><use href="/icons/icons.svg#tick" /></svg>
                   <span> Cepillado </span>
                 </li>
               </ul>

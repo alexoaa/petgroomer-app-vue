@@ -13,7 +13,7 @@
         </p>
         <router-link :to="{ name: 'estetica' }" class="btn-primary">
           <svg>
-            <use href="@/assets/icons/icons.svg#paw" />
+            <use href="/icons/icons.svg#paw" />
           </svg>
           Agendar una cita
         </router-link>
@@ -41,7 +41,7 @@
           <ul>
             <li class="mb-7 flex">
               <svg class="block w-[24px] h-[24px] mr-2">
-                <use href="@/assets/icons/icons.svg#bone" />
+                <use href="/icons/icons.svg#bone" />
               </svg>
               <div class="w-full">
                 <h1 class="text-xl mb-3">Piel y Pelaje Saludable:</h1>
@@ -55,7 +55,7 @@
             </li>
             <li class="mb-10 flex">
               <svg class="block w-[24px] h-[24px] mr-2">
-                <use href="@/assets/icons/icons.svg#bone" />
+                <use href="/icons/icons.svg#bone" />
               </svg>
               <div class="w-full">
                 <h1 class="text-xl mb-3">
@@ -70,7 +70,7 @@
             </li>
             <li class="mb-10 flex">
               <svg class="block w-[24px] h-[24px] mr-2">
-                <use href="@/assets/icons/icons.svg#bone" />
+                <use href="/icons/icons.svg#bone" />
               </svg>
               <div class="w-full">
                 <h1 class="text-xl mb-3">
@@ -164,7 +164,7 @@
         </p>
         <router-link :to="{ name: 'estetica' }" class="btn-terciary">
           <svg>
-            <use href="@/assets/icons/icons.svg#paw" />
+            <use href="/icons/icons.svg#paw" />
           </svg>
           Agendar una cita
         </router-link>
@@ -177,27 +177,27 @@
           <ul>
             <li>
               <svg>
-                <use href="@/assets/icons/icons.svg#star" />
+                <use href="/icons/icons.svg#star" />
               </svg>
             </li>
             <li>
               <svg>
-                <use href="@/assets/icons/icons.svg#star" />
+                <use href="/icons/icons.svg#star" />
               </svg>
             </li>
             <li>
               <svg>
-                <use href="@/assets/icons/icons.svg#star" />
+                <use href="/icons/icons.svg#star" />
               </svg>
             </li>
             <li>
               <svg>
-                <use href="@/assets/icons/icons.svg#star" />
+                <use href="/icons/icons.svg#star" />
               </svg>
             </li>
             <li>
               <svg>
-                <use href="@/assets/icons/icons.svg#star" />
+                <use href="/icons/icons.svg#star" />
               </svg>
             </li>
           </ul>
@@ -212,27 +212,27 @@
           <ul>
             <li>
               <svg>
-                <use href="@/assets/icons/icons.svg#star" />
+                <use href="/icons/icons.svg#star" />
               </svg>
             </li>
             <li>
               <svg>
-                <use href="@/assets/icons/icons.svg#star" />
+                <use href="/icons/icons.svg#star" />
               </svg>
             </li>
             <li>
               <svg>
-                <use href="@/assets/icons/icons.svg#star" />
+                <use href="/icons/icons.svg#star" />
               </svg>
             </li>
             <li>
               <svg>
-                <use href="@/assets/icons/icons.svg#star" />
+                <use href="/icons/icons.svg#star" />
               </svg>
             </li>
             <li>
               <svg>
-                <use href="@/assets/icons/icons.svg#star" />
+                <use href="/icons/icons.svg#star" />
               </svg>
             </li>
           </ul>
@@ -247,27 +247,27 @@
           <ul>
             <li>
               <svg>
-                <use href="@/assets/icons/icons.svg#star" />
+                <use href="/icons/icons.svg#star" />
               </svg>
             </li>
             <li>
               <svg>
-                <use href="@/assets/icons/icons.svg#star" />
+                <use href="/icons/icons.svg#star" />
               </svg>
             </li>
             <li>
               <svg>
-                <use href="@/assets/icons/icons.svg#star" />
+                <use href="/icons/icons.svg#star" />
               </svg>
             </li>
             <li>
               <svg>
-                <use href="@/assets/icons/icons.svg#star" />
+                <use href="/icons/icons.svg#star" />
               </svg>
             </li>
             <li>
               <svg>
-                <use href="@/assets/icons/icons.svg#star" />
+                <use href="/icons/icons.svg#star" />
               </svg>
             </li>
           </ul>
@@ -287,7 +287,7 @@
           <li ref="serviceStepOne">
             <div @click.stop="serviceStepOneVisible = !serviceStepOneVisible">
               <h1 class="text-2xl"><span>Paso 1:</span> Agenda tu Cita</h1>
-              <svg><use href="@/assets/icons/icons.svg#plus" /></svg>
+              <svg><use href="/icons/icons.svg#plus" /></svg>
             </div>
             <p v-show="serviceStepOneVisible">
               - Elije el servicio que desees para tu mascota.<br /><br />
@@ -304,7 +304,7 @@
           <li ref="serviceStepTwo">
             <div @click.stop="serviceStepTwoVisible = !serviceStepTwoVisible">
               <h1 class="text-2xl"><span>Paso 2:</span> Confirma tu Cita</h1>
-              <svg><use href="@/assets/icons/icons.svg#plus" /></svg>
+              <svg><use href="/icons/icons.svg#plus" /></svg>
             </div>
             <p v-show="serviceStepTwoVisible">
               Una vez que hayas completado tus datos, confirma la cita.
@@ -317,7 +317,7 @@
               @click.stop="serviceStepThreeVisible = !serviceStepThreeVisible"
             >
               <h1 class="text-2xl"><span>Paso 3:</span> Día de la Cita</h1>
-              <svg><use href="@/assets/icons/icons.svg#plus" /></svg>
+              <svg><use href="/icons/icons.svg#plus" /></svg>
             </div>
             <p v-show="serviceStepThreeVisible">
               El día de la cita, 3 horas antes, recibirás un recordatorio por
@@ -333,7 +333,7 @@
                 <span>Paso 4:</span> Recoge a tu Mascota y Programa tu Próxima
                 Cita
               </h1>
-              <svg><use href="@/assets/icons/icons.svg#plus" /></svg>
+              <svg><use href="/icons/icons.svg#plus" /></svg>
             </div>
             <p v-show="serviceStepFourVisible">
               Después del servicio, puedes hablar con nuestro equipo sobre tus
@@ -350,32 +350,32 @@
                 <ul>
                   <li>
                     <svg>
-                      <use href="@/assets/icons/icons.svg#star" />
+                      <use href="/icons/icons.svg#star" />
                     </svg>
                   </li>
                   <li>
                     <svg>
-                      <use href="@/assets/icons/icons.svg#star" />
+                      <use href="/icons/icons.svg#star" />
                     </svg>
                   </li>
                   <li>
                     <svg>
-                      <use href="@/assets/icons/icons.svg#star" />
+                      <use href="/icons/icons.svg#star" />
                     </svg>
                   </li>
                   <li>
                     <svg>
-                      <use href="@/assets/icons/icons.svg#star" />
+                      <use href="/icons/icons.svg#star" />
                     </svg>
                   </li>
                   <li>
                     <svg>
-                      <use href="@/assets/icons/icons.svg#star" />
+                      <use href="/icons/icons.svg#star" />
                     </svg>
                   </li>
                 </ul>
               </h1>
-              <svg><use href="@/assets/icons/icons.svg#plus" /></svg>
+              <svg><use href="/icons/icons.svg#plus" /></svg>
             </div>
             <p v-show="serviceStepFiveVisible">
               Si quedas satisfecho con nuestros servicios, no dudes en compartir

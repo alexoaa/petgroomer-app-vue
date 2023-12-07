@@ -55,7 +55,7 @@
         @click="this.closeSession()"
       >
         <svg>
-          <use href="@/assets/icons/icons.svg#logout" />
+          <use href="/icons/icons.svg#logout" />
         </svg>
         Cerrar sesión
       </button>

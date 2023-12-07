@@ -42,7 +42,7 @@
         <div>
           <span>Reporte</span>
           <button @click="downloadApptReport">
-            <svg><use href="@/assets/icons/icons.svg#download-two" /></svg>
+            <svg><use href="/icons/icons.svg#download-two" /></svg>
           </button>
         </div>
       </section>
@@ -51,11 +51,11 @@
       <div class="timetable-date">
         <div @click="openApptHistoryCalendar" id="btnDate">
           <svg>
-            <use href="@/assets/icons/icons.svg#calendar-days" />
+            <use href="/icons/icons.svg#calendar-days" />
           </svg>
           <span> {{ dayOfWeekString }}, {{ selectedDate }}</span>
           <svg>
-            <use href="@/assets/icons/icons.svg#calendar-days" />
+            <use href="/icons/icons.svg#calendar-days" />
           </svg>
         </div>
         <Transition
@@ -128,14 +128,14 @@
                 @click="openApptDetails(value[0])"
               >
                 Llamar cliente
-                <svg><use href="@/assets/icons/icons.svg#phone" /></svg>
+                <svg><use href="/icons/icons.svg#phone" /></svg>
               </button>
               <button
                 class="btn-terciary-gray"
                 @click="openApptDetails(value[0])"
               >
                 Mas detalles
-                <svg><use href="@/assets/icons/icons.svg#chevronDown" /></svg>
+                <svg><use href="/icons/icons.svg#chevronDown" /></svg>
               </button>
             </div>
           </div>

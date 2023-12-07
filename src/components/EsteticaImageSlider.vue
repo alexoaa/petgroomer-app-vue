@@ -19,6 +19,11 @@
 import { Splide, SplideSlide, SplideTrack } from "@splidejs/vue-splide";
 import "@splidejs/vue-splide/css";
 
+import image1 from "@/assets/images/EsteticaCarousel/imageSlider.webp";
+import image2 from "@/assets/images/EsteticaCarousel/imageSlider1.webp";
+import image3 from "@/assets/images/EsteticaCarousel/imageSlider2.webp";
+import image4 from "@/assets/images/EsteticaCarousel/imageSlider3.webp";
+
 export default {
   name: "EsteticaImageSlider",
   components: {
@@ -30,19 +35,19 @@ export default {
     return {
       slides: [
         {
-          src: `src/assets/images/EsteticaCarousel/imageSlider.webp`,
+          src: image1,
           alt: `Image 1`,
         },
         {
-          src: `src/assets/images/EsteticaCarousel/imageSlider2.webp`,
+          src: image2,
           alt: `Image 2`,
         },
         {
-          src: `src/assets/images/EsteticaCarousel/imageSlider1.webp`,
+          src: image3,
           alt: `Image 3`,
         },
         {
-          src: `src/assets/images/EsteticaCarousel/imageSlider3.webp`,
+          src: image4,
           alt: `Image 4`,
         },
       ],

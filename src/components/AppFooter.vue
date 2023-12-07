@@ -12,17 +12,17 @@
         <ul class="block w-full">
           <li>
             <a href="#">
-              <svg><use href="@/assets/icons/icons.svg#facebook-logo" /></svg>
+              <svg><use href="/icons/icons.svg#facebook-logo" /></svg>
             </a>
           </li>
           <li>
             <a href="#">
-              <svg><use href="@/assets/icons/icons.svg#instagram-logo" /></svg>
+              <svg><use href="/icons/icons.svg#instagram-logo" /></svg>
             </a>
           </li>
           <li>
             <a href="#">
-              <svg><use href="@/assets/icons/icons.svg#tiktok-logo" /></svg>
+              <svg><use href="/icons/icons.svg#tiktok-logo" /></svg>
             </a>
           </li>
         </ul>
@@ -37,7 +37,7 @@
           >
             <span>ACERCA DE DOGBARBER</span>
             <svg :class="acercaVisible ? 'rotate-180' : ''">
-              <use href="@/assets/icons/icons.svg#chevronDown" />
+              <use href="/icons/icons.svg#chevronDown" />
             </svg>
           </div>
           <ul
@@ -76,7 +76,7 @@
           >
             <span>LINKS DE INTERÉS</span>
             <svg :class="interesVisible ? 'rotate-180' : ''">
-              <use href="@/assets/icons/icons.svg#chevronDown" />
+              <use href="/icons/icons.svg#chevronDown" />
             </svg>
           </div>
           <ul
@@ -108,7 +108,7 @@
           >
             <span>INFORMACIÓN</span>
             <svg :class="infoVisible ? 'rotate-180' : ''">
-              <use href="@/assets/icons/icons.svg#chevronDown" />
+              <use href="/icons/icons.svg#chevronDown" />
             </svg>
           </div>
           <ul

@@ -8,7 +8,7 @@
     >
       <div class="close-modal-button">
         <button @click="emit('closeApptDetails')">
-          <svg><use href="@/assets/icons/icons.svg#cross" /></svg>
+          <svg><use href="/icons/icons.svg#cross" /></svg>
         </button>
       </div>
       <h1 class="text-2xl font-bold w-full text-center pb-4">
@@ -100,7 +100,7 @@
           id="completeApptDetails"
         >
           Completar
-          <svg><use href="@/assets/icons/icons.svg#tick" /></svg>
+          <svg><use href="/icons/icons.svg#tick" /></svg>
         </button>
         <button
           class="btn-appt-details"
@@ -108,14 +108,14 @@
           id="cancelApptDetails"
         >
           Cancelar
-          <svg><use href="@/assets/icons/icons.svg#cross" /></svg>
+          <svg><use href="/icons/icons.svg#cross" /></svg>
         </button>
         <button
           class="btn-appt-details bg-[var(--light-gray-color)]"
           @click="openEditApptmodal()"
         >
           Editar
-          <svg><use href="@/assets/icons/icons.svg#edit" /></svg>
+          <svg><use href="/icons/icons.svg#edit" /></svg>
         </button>
         <button
           class="btn-appt-details bg-[var(--light-gray-color-100)] text-[var(--black-text-color)]"
