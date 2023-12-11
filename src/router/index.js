@@ -106,7 +106,7 @@ const routeTitles = {
 };
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL || "/"),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   scrollBehavior() {
     document.getElementById("divToScroll").scrollIntoView();
@@ -116,7 +116,6 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log(import.meta.env.VUE_APP_BASE_URL || "/");
   const userStore = useUserStore();
   const generalVariablesStore = useGeneralVariablesStore();
   if (to.name == "home") generalVariablesStore.homePageNavbarColor = true;
