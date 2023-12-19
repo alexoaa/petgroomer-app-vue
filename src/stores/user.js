@@ -33,7 +33,7 @@ export const useUserStore = defineStore("user", {
           this.resetData();
         }
       } catch (axiosError) {
-        console.log(axiosError);
+        this.resetData();
       }
     },
     resetData() {
@@ -47,7 +47,6 @@ export const useUserStore = defineStore("user", {
       this.isAdmin = false;
       this.isAuthenticating = false;
       localStorage.removeItem("isAuthenticated");
-      document.cookie = "connect.sid=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
     },
     async login(values) {
       try {
@@ -62,6 +61,7 @@ export const useUserStore = defineStore("user", {
         );
         //
         this.loadData(axiosRequest.data.data);
+        console.log(axiosRequest);
         return { success: true, message: axiosRequest.data.message };
       } catch (axiosError) {
         if (axiosError.response)
@@ -112,6 +112,7 @@ export const useUserStore = defineStore("user", {
           `${import.meta.env.VITE_VUE_APP_API_URL}/user/info-account`,
           { withCredentials: true }
         );
+        console.log(axiosRequest);
         if (axiosRequest.status === 200) {
           return { data: axiosRequest.data.data };
         }

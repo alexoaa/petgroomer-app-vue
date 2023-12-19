@@ -30,7 +30,7 @@ export default {
   methods: {
     ...mapActions(useUserStore, { loadData: "loadData" }),
     ...mapActions(useUserStore, { resetData: "resetData" }),
-    ...mapActions(useUserStore, { logout: "logout" }),
+    ...mapActions(useUserStore, { resetData: "resetData" }),
   },
   async created() {
     if (localStorage.isAuthenticated) {
@@ -45,8 +45,8 @@ export default {
       } catch (axiosError) {
         this.userStore.resetData();
       }
-    } else if (document.cookie.indexOf("connect.sid") !== -1) {
-      this.logout();
+    } else {
+      this.resetData();
     }
   },
   mounted() {
