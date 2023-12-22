@@ -26,7 +26,7 @@ export const useUserStore = defineStore("user", {
     async logout() {
       try {
         const axiosRequest = await axios.delete(
-          `${import.meta.env.VITE_VUE_APP_API_URL}/logout`,
+          `https://us-central1-dogbarber-server.cloudfunctions.net/api/logout`,
           { withCredentials: true }
         );
         if (axiosRequest.status === 200) {
@@ -51,7 +51,7 @@ export const useUserStore = defineStore("user", {
     async login(values) {
       try {
         const axiosRequest = await axios.post(
-          `${import.meta.env.VITE_VUE_APP_API_URL}/login`,
+          `https://us-central1-dogbarber-server.cloudfunctions.net/api/login`,
           {
             email: values.email,
             password: values.password,
@@ -75,7 +75,7 @@ export const useUserStore = defineStore("user", {
     async register(values) {
       try {
         const axiosRequest = await axios.post(
-          `${import.meta.env.VITE_VUE_APP_API_URL}/register`,
+          `https://us-central1-dogbarber-server.cloudfunctions.net/api/register`,
           {
             name: values.name,
             lastName: values.lastName,
@@ -108,7 +108,7 @@ export const useUserStore = defineStore("user", {
     async getUserAccountInfo() {
       try {
         const axiosRequest = await axios.get(
-          `${import.meta.env.VITE_VUE_APP_API_URL}/user/info-account`,
+          `https://us-central1-dogbarber-server.cloudfunctions.net/api/user/info-account`,
           { withCredentials: true }
         );
         if (axiosRequest.status === 200) {
@@ -121,7 +121,7 @@ export const useUserStore = defineStore("user", {
     async updateUserAccountInfo(values) {
       try {
         const axiosRequest = await axios.post(
-          `${import.meta.env.VITE_VUE_APP_API_URL}/user/account/update-info`,
+          `https://us-central1-dogbarber-server.cloudfunctions.net/api/user/account/update-info`,
           { values },
           { withCredentials: true }
         );
@@ -168,7 +168,7 @@ export const useUserStore = defineStore("user", {
     async scheduleAppointment(values) {
       try {
         const axiosRequest = await axios.post(
-          `${import.meta.env.VITE_VUE_APP_API_URL}/new-appointment`,
+          `https://us-central1-dogbarber-server.cloudfunctions.net/api/new-appointment`,
           {
             user_name: values.nombreCliente,
             user_phone: values.numeroTelefono,
@@ -217,7 +217,7 @@ export const useUserStore = defineStore("user", {
     async recoverPassword(values) {
       try {
         const axiosRequest = await axios.post(
-          `${import.meta.env.VITE_VUE_APP_API_URL}/recover-password/email`,
+          `https://us-central1-dogbarber-server.cloudfunctions.net/api/recover-password/email`,
           {
             email: values.email,
           },
@@ -237,9 +237,7 @@ export const useUserStore = defineStore("user", {
     async verifyResetLinkRequest(values) {
       try {
         const axiosRequest = await axios.get(
-          `${import.meta.env.VITE_VUE_APP_API_URL}/recover-password/verify/${
-            values.user
-          }?t=${values.token}`,
+          `https://us-central1-dogbarber-server.cloudfunctions.net/api/recover-password/verify/${values.user}?t=${values.token}`,
           { withCredentials: true }
         );
         return { success: true, message: axiosRequest.data.message };
@@ -256,7 +254,7 @@ export const useUserStore = defineStore("user", {
     async resetPassword(values) {
       try {
         const axiosRequest = await axios.post(
-          `${import.meta.env.VITE_VUE_APP_API_URL}/recover-password/reset`,
+          `https://us-central1-dogbarber-server.cloudfunctions.net/api/recover-password/reset`,
           {
             token: values.token,
             user: values.user,
@@ -280,7 +278,7 @@ export const useUserStore = defineStore("user", {
       console.log("checkUpcomingAppointments");
       try {
         const axiosRequest = await axios.get(
-          `${import.meta.env.VITE_VUE_APP_API_URL}/user/upcoming-appointments`,
+          `https://us-central1-dogbarber-server.cloudfunctions.net/api/user/upcoming-appointments`,
           { withCredentials: true }
         );
         return { success: true, message: axiosRequest.data.message };
@@ -299,9 +297,7 @@ export const useUserStore = defineStore("user", {
       return;
       try {
         const axiosRequest = await axios.get(
-          `${import.meta.env.VITE_VUE_APP_API_URL}/get-appointments-history/${
-            values.user
-          }?t=${values.token}`,
+          `https://us-central1-dogbarber-server.cloudfunctions.net/api/get-appointments-history/${values.user}?t=${values.token}`,
           { withCredentials: true }
         );
         return { success: true, message: axiosRequest.data.message };

@@ -106,7 +106,7 @@ const routeTitles = {
 };
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(),
   routes,
   scrollBehavior() {
     document.getElementById("divToScroll").scrollIntoView();

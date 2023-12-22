@@ -36,7 +36,7 @@ export default {
     if (localStorage.isAuthenticated) {
       try {
         const axiosRequest = await axios.get(
-          `${import.meta.env.VITE_VUE_APP_API_URL}/isAuthenticated`,
+          `${this.generalVariablesStore.apiURL}/isAuthenticated`,
           // In order to accept cookies from server, this option must be true and configured in the server
           { withCredentials: true }
         );
