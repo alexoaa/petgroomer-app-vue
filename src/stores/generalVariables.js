@@ -15,8 +15,6 @@ export default defineStore("generalVariables", {
 
     // Modals Variables
     ConfirmationModalIsOpen: false,
-    // API RUL
-    apiURL: "https://us-central1-dogbarber-server.cloudfunctions.net/api",
   }),
   actions: {
     // Sidebar actions

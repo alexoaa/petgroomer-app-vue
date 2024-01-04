@@ -10,7 +10,7 @@ export default defineStore("admin", {
         let apptPendingCounter = 0;
         let apptCompletedCounter = 0;
         const axiosRequest = await axios.get(
-          `https://us-central1-dogbarber-server.cloudfunctions.net/api/user/admin/appointments-daily-history?date-selected=${date}`,
+          `${import.meta.env.VITE_VUE_APP_API_URL}/user/admin/appointments-daily-history?date-selected=${date}`,
           { withCredentials: true }
         );
         if (!axiosRequest.data.appointments)
@@ -64,7 +64,7 @@ export default defineStore("admin", {
     async modifyAppointment(values) {
       try {
         const axiosRequest = await axios.patch(
-          `https://us-central1-dogbarber-server.cloudfunctions.net/api/user/admin/modify-existing-appointment`,
+          `${import.meta.env.VITE_VUE_APP_API_URL}/user/admin/modify-existing-appointment`,
           { values },
           { withCredentials: true }
         );
