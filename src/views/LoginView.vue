@@ -78,7 +78,22 @@
         </div>
         <!-- Login button -->
         <div class="submit-container">
-          <button type="submit" class="btn-primary">Iniciar sesión</button>
+          <button
+            type="submit"
+            class="btn-primary"
+            :disabled="userIsBeingLoggedIn"
+          >
+            <span
+              v-if="!userIsBeingLoggedIn"
+              class="text-[var(--text-color)] font-bold"
+            >
+              Iniciar sesión
+            </span>
+            <div
+              v-else
+              class="border-t-transparent border-solid animate-spin-slow rounded-full border-[var(--white-text-color)] border-[4px] h-[36px] w-[36px] mx-auto"
+            />
+          </button>
           <div class="error-message">
             {{ responseError }}
           </div>
@@ -119,14 +134,17 @@ export default {
         password: "required",
       },
       responseError: "",
+      userIsBeingLoggedIn: false,
     };
   },
   methods: {
     async loginUser(values) {
+      this.userIsBeingLoggedIn = true;
       this.responseError = "";
       const loginRequest = await this.userStore.login(values);
       if (!loginRequest.success) this.responseError = loginRequest.message;
       else router.push("/");
+      this.userIsBeingLoggedIn = false;
     },
     togglePass() {
       this.passFieldType =

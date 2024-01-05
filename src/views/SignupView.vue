@@ -213,7 +213,7 @@
             </span>
             <div
               v-else
-              class="border-t-transparent border-solid animate-spin-slow rounded-full border-[var(--dark-text-color)] border-[4px] h-[36px] w-[36px] mx-auto"
+              class="border-t-transparent border-solid animate-spin-slow rounded-full border-[var(--white-text-color)] border-[4px] h-[36px] w-[36px] mx-auto"
             />
           </button>
           <div class="error-message">
