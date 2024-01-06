@@ -1,8 +1,5 @@
 <template>
   <div class="py-[60px]">
-    <section class="w-full h-auto pt-0">
-      <h1>ADMIN VIEW</h1>
-    </section>
     <div class="form-container">
       <vee-form
         action="/new-appointment"
@@ -13,9 +10,10 @@
         v-slot="{ errors }"
       >
         <div class="appointment-section">
-          <!-- Client name -->
-          <div v-show="!userStore.isAuth" class="user-contact-info">
-            <h1>Introduce tus datos de contacto</h1>
+          <!-- Client info -->
+          <div class="user-contact-info">
+            <h1>Introduce los datos de contacto</h1>
+            <!-- Client name -->
             <div id="nombreClienteDiv" class="fields-container">
               <div class="inputBox">
                 <vee-field
@@ -26,7 +24,7 @@
                   autocomplete="off"
                   required
                 />
-                <span>Tu nombre *</span>
+                <span>Nombre del cliente*</span>
               </div>
               <ErrorMessage name="nombreCliente" class="error-message" />
             </div>
@@ -42,7 +40,7 @@
                   autocomplete="off"
                   required
                 />
-                <span>Numero de telefono *</span>
+                <span>Numero de teléfono*</span>
               </div>
               <ErrorMessage name="numeroTelefono" class="error-message" />
             </div>
@@ -58,7 +56,7 @@
                   maxlength="10"
                   required
                 />
-                <span>Numero de telefono (Opcional)</span>
+                <span>Numero de teléfono (Opcional)</span>
               </div>
               <ErrorMessage name="segundoNumTel" class="error-message" />
             </div>
@@ -66,9 +64,8 @@
           <!-- Pets -->
           <div class="pets">
             <div class="pet-info" id="datosMascota">
-              <!-- TODO - WHEN USER INPUTS NAME OF PET, IF USER IS AUTH WE SHOULD LOOK AND OFFER AN OPTION TO CHOSE THAT PET -->
               <div class="w-full">
-                <h1>Datos de tu mascota</h1>
+                <h1>Datos de la mascota</h1>
                 <!-- Pet name -->
                 <div id="nombreMascotaDiv" class="fields-container">
                   <div class="inputBox">
@@ -80,7 +77,7 @@
                       autocomplete="off"
                       required
                     />
-                    <span>Nombre de tu mascota *</span>
+                    <span>Nombre de la mascota*</span>
                   </div>
                   <ErrorMessage name="nombreMascota" class="error-message" />
                 </div>
@@ -106,7 +103,7 @@
                             this.especieMascotaActive ||
                             this.especieMascotaLabel,
                         }"
-                        >Especie *</span
+                        >Especie*</span
                       >
                       <span>{{ this.especieMascotaLabel }}</span>
                       <svg
@@ -345,7 +342,7 @@
               <textarea
                 id="comentariosCita"
                 v-model="comentariosCita"
-                placeholder="Ingresa información que deberiamos tener en cuenta o te gustaría que aplicaramos en la cita..."
+                placeholder="Ingresa información que deberiamos tener en cuenta sobre la mascota o que apliquemos en la cita..."
               />
             </vee-field>
             <label
@@ -364,6 +361,76 @@
           >Todos los campos * son necesarios.</span
         >
       </vee-form>
+    </div>
+    <!-- Modal to confirm appointment details before booking -->
+    <div
+      class="fixed z-[100] inset-0 overflow-hidden px-4"
+      v-if="bgApptDetailsConfirmationModal"
+    >
+      <div class="flex items-center justify-center min-h-screen text-center">
+        <div class="fixed inset-0 transition-opacity">
+          <div class="absolute inset-0 bg-gray-800 opacity-75"></div>
+        </div>
+
+        <!-- This element is to trick the browser into centering the modal contents. -->
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen"
+          >&#8203;</span
+        >
+
+        <Transition
+          enter-active-class="animate__animated animate__bounceIn"
+          leave-active-class="animate__animated animate__bounceOut"
+        >
+          <div
+            v-if="apptDetailsConfirmationModal"
+            class="p-6 text-center min-w-[350px] min-h-[250px] max-w-[600px] max-h-[600px] overflow-y-auto bg-[var(--background-main-color)] bg-white rounded-lg shadow-xl transform transition-all"
+            ref="apptDetailsConfirmationModal"
+          >
+            <h1 class="text-[1.3rem] font-bold">Detalles de la cita</h1>
+            <ul class="appt-details-ul w-full text-left my-4">
+              <li>
+                <span>Nombre del cliente: </span>{{ this.nombreCliente || "-" }}
+              </li>
+              <li>
+                <span>Número de teléfono: </span
+                >{{ this.numeroTelefono || "-" }}
+              </li>
+              <li>
+                <span>Télefono alterno: </span>{{ this.segundoNumTel || "-" }}
+              </li>
+              <li>
+                <span>Nombre de la mascota: </span
+                >{{ this.nombreMascota || "-" }}
+              </li>
+              <li><span>Especie: </span>{{ this.especieMascota || "-" }}</li>
+              <li><span>Raza: </span>{{ this.razaMascota || "-" }}</li>
+              <li><span>Servicio: </span>{{ this.servicioMascota || "-" }}</li>
+              <li>
+                <span>Fecha: </span>
+                {{ this.fechaCitaSpanish || "-" }}
+              </li>
+              <li><span>Hora: </span>{{ this.horaCita || "-" }}</li>
+              <li>
+                <span>Comentarios: </span>{{ this.comentariosCita || "-" }}
+              </li>
+            </ul>
+            <button
+              @click="closeApptDetailsConfirmationModal"
+              type="button"
+              class="py-[10px] px-[20px] hover:font-bold underline mb-3 text-[1.1rem]"
+            >
+              Cancelar
+            </button>
+            <button
+              @click="apptDetailsConfirmation()"
+              type="button"
+              class="btn-submit text-[1.1rem]"
+            >
+              Agendar
+            </button>
+          </div>
+        </Transition>
+      </div>
     </div>
     <!-- Modal for new appointment confirmation -->
     <div
@@ -403,14 +470,12 @@ import { mapStores, mapActions } from "pinia";
 import { useUserStore } from "@/stores/user.js";
 import useGeneralVariablesStore from "@/stores/generalVariables";
 import router from "@/router";
-import EsteticaImageSlider from "@/components/EsteticaImageSlider.vue";
 import CalendarEstetica from "@/components/CalendarEstetica.vue";
 import ConfirmationModal from "@/components/account/ConfirmationModal.vue";
 
 export default {
-  name: "EsteticaView",
+  name: "AdminAgendarCita",
   components: {
-    EsteticaImageSlider,
     CalendarEstetica,
     ConfirmationModal,
   },
@@ -430,6 +495,10 @@ export default {
       especieMascotaLabel: "",
       especieMascotaActive: false,
       availableHours: [],
+      formValues: {},
+
+      bgApptDetailsConfirmationModal: false,
+      apptDetailsConfirmationModal: false,
 
       responseMessage: "",
       success: false,
@@ -510,16 +579,26 @@ export default {
       }
     },
     async newAppointment(values) {
+      this.formValues = values;
+      // Modal to confirm the appointment details before booking
+      this.bgApptDetailsConfirmationModal = true;
+      this.apptDetailsConfirmationModal = true;
+      // Wait for confirmation from the modal
+    },
+    async apptDetailsConfirmation() {
       let appTime = "PM";
-      this.bgConfirmationModalIsOpen = true;
       this.reloadPage = true;
-      values.servicioMascota =
-        values.servicioMascota === "Baño"
+      this.formValues.servicioMascota =
+        this.formValues.servicioMascota === "Baño"
           ? 1
-          : values.servicioMascota === "Completo"
+          : this.formValues.servicioMascota === "Completo"
           ? 2
           : 3;
-      const scheduleAppointmentRequest = await this.scheduleAppointment(values);
+      this.closeApptDetailsConfirmationModal();
+      this.bgConfirmationModalIsOpen = true;
+      const scheduleAppointmentRequest = await this.scheduleAppointment(
+        this.formValues
+      );
       if (!scheduleAppointmentRequest.success) {
         this.responseMessage = scheduleAppointmentRequest.message;
         this.ConfirmationModalIsOpen = false;
@@ -538,26 +617,12 @@ export default {
         if (this.reloadPage) router.go("/estetica");
       }, 100);
     },
-    // Method that will call the getUserAccountInfo from userStore to automatically fill fields with user info
-    async getUserInfoAuthed() {
-      const userInfoRequest = await this.getUserAccountInfo();
-      this.nombreCliente = `${userInfoRequest.data.name} ${userInfoRequest.data.lastName}`;
-      this.numeroTelefono = userInfoRequest.data.phone;
+    closeApptDetailsConfirmationModal() {
+      this.apptDetailsConfirmationModal = false;
+      setTimeout(() => {
+        this.bgApptDetailsConfirmationModal = false;
+      }, 100);
     },
-  },
-  created() {
-    // Watcher to isAuth userStore, when user logs in while being on /estetica, the fields will automatically update to the user info
-    const usingUserStore = useUserStore();
-    this.$watch(
-      () => usingUserStore.isAuth,
-      (newVal) => {
-        if (newVal) this.getUserInfoAuthed();
-      }
-    );
-    // If user isAuth or the localStorage isAuth are true, the fields will automatically update to the user info
-    if (this.userStore.isAuth || localStorage.isAuthenticated) {
-      this.getUserInfoAuthed();
-    }
   },
 };
 </script>
@@ -567,8 +632,20 @@ export default {
 .animate__animated.animate__fadeOut {
   --animate-duration: 300ms;
 }
+.appt-details-ul {
+  li {
+    word-break: break-all;
+    margin: 5px 0;
+    span {
+      font-weight: 700;
+    }
+  }
+}
 #btnAgendar {
   width: 100%;
   margin: 0 0 20px;
+}
+.btn-submit {
+  margin: 0;
 }
 </style>
