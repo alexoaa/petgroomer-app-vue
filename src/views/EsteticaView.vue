@@ -430,13 +430,14 @@ export default {
       especieMascotaLabel: "",
       especieMascotaActive: false,
       availableHours: [],
-
+      // Variables for confirmation/error modal
       responseMessage: "",
       success: false,
       bgConfirmationModalIsOpen: false,
       ConfirmationModalIsOpen: false,
       closeConfirmationButton: true,
-
+      reloadPage: false,
+      //
       agendarSchema: {
         nombreCliente: "required|alphaSpaces|min:3|max:100",
         numeroTelefono: "required|integer|min:10|max:10",
@@ -500,11 +501,18 @@ export default {
       const availableHoursRequest = await this.getHourAvailability(
         this.fechaCita
       );
-      this.availableHours = availableHoursRequest.message;
+      if (availableHoursRequest.success)
+        this.availableHours = availableHoursRequest.message;
+      else {
+        this.bgConfirmationModalIsOpen = true;
+        this.responseMessage = availableHoursRequest.message;
+        this.ConfirmationModalIsOpen = true;
+      }
     },
     async newAppointment(values) {
       let appTime = "PM";
       this.bgConfirmationModalIsOpen = true;
+      this.reloadPage = true;
       values.servicioMascota =
         values.servicioMascota === "Baño"
           ? 1
@@ -527,7 +535,7 @@ export default {
       this.ConfirmationModalIsOpen = false;
       setTimeout(() => {
         this.bgConfirmationModalIsOpen = false;
-        router.go("/estetica");
+        if (this.reloadPage) router.go("/estetica");
       }, 100);
     },
     // Method that will call the getUserAccountInfo from userStore to automatically fill fields with user info

@@ -92,7 +92,6 @@ export default {
   },
   mounted() {
     const modalTarget = ref(this.$refs.modalTarget);
-    console.log(this.responseMessage.split("."));
     document.getElementById("responseMsg").innerHTML = this.responseMessage;
 
     onClickOutside(modalTarget, () => {

@@ -25,9 +25,12 @@ export const useUserStore = defineStore("user", {
     },
     async logout() {
       try {
-        const axiosRequest = await axios.delete(`${import.meta.env.VITE_VUE_APP_API_URL}/logout`, {
-          withCredentials: true,
-        });
+        const axiosRequest = await axios.delete(
+          `${import.meta.env.VITE_VUE_APP_API_URL}/logout`,
+          {
+            withCredentials: true,
+          }
+        );
         if (axiosRequest.status === 200) {
           this.resetData();
         }
@@ -60,7 +63,11 @@ export const useUserStore = defineStore("user", {
         );
         //
         this.loadData(axiosRequest.data.data);
-        return { success: true, message: axiosRequest.data.message };
+        return {
+          success: true,
+          message: axiosRequest.data.message,
+          isAdmin: this.isAdmin,
+        };
       } catch (axiosError) {
         if (axiosError.response)
           return { success: false, message: axiosError.response.data.message };
@@ -143,7 +150,9 @@ export const useUserStore = defineStore("user", {
     async changePassword(values) {
       try {
         const axiosRequest = await axios.post(
-          `${import.meta.env.VITE_VUE_APP_API_URL}/user/account/password/change-password`,
+          `${
+            import.meta.env.VITE_VUE_APP_API_URL
+          }/user/account/password/change-password`,
           {
             currentPassword: values.currentPassword,
             newPassword: values.newPassword,
@@ -195,7 +204,9 @@ export const useUserStore = defineStore("user", {
     async getHourAvailability(dateSelected) {
       try {
         const axiosRequest = await axios.get(
-          `${import.meta.env.VITE_VUE_APP_API_URL}/appointment-availability?date-selected=${dateSelected}`,
+          `${
+            import.meta.env.VITE_VUE_APP_API_URL
+          }/appointment-availability?date-selected=${dateSelected}`,
           { withCredentials: true }
         );
         return { success: true, message: axiosRequest.data.message };
@@ -232,7 +243,9 @@ export const useUserStore = defineStore("user", {
     async verifyResetLinkRequest(values) {
       try {
         const axiosRequest = await axios.get(
-          `${import.meta.env.VITE_VUE_APP_API_URL}/recover-password/verify/${values.user}?t=${values.token}`,
+          `${import.meta.env.VITE_VUE_APP_API_URL}/recover-password/verify/${
+            values.user
+          }?t=${values.token}`,
           { withCredentials: true }
         );
         return { success: true, message: axiosRequest.data.message };
@@ -292,7 +305,9 @@ export const useUserStore = defineStore("user", {
       return;
       try {
         const axiosRequest = await axios.get(
-          `${import.meta.env.VITE_VUE_APP_API_URL}/get-appointments-history/${values.user}?t=${values.token}`,
+          `${import.meta.env.VITE_VUE_APP_API_URL}/get-appointments-history/${
+            values.user
+          }?t=${values.token}`,
           { withCredentials: true }
         );
         return { success: true, message: axiosRequest.data.message };

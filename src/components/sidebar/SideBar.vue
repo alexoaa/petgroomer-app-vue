@@ -10,7 +10,7 @@
     </li>
     <li class="li-item">
       <CustomRouterLink
-        to="/estetica"
+        :to="this.userStore.isAdmin ? '/admin/agendar-cita' : '/estetica'"
         text="Agendar una cita"
         svg="true"
         svgRef="paw"

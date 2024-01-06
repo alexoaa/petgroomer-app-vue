@@ -143,6 +143,7 @@ export default {
       this.responseError = "";
       const loginRequest = await this.userStore.login(values);
       if (!loginRequest.success) this.responseError = loginRequest.message;
+      else if (loginRequest.isAdmin) router.push("/admin/home");
       else router.push("/");
       this.userIsBeingLoggedIn = false;
     },

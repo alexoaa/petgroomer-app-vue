@@ -9,6 +9,7 @@ import RecuperarContraseña from "@/views/password/RecuperarContraseña.vue";
 import RestablecerContraseña from "@/views/password/RestablecerContraseña.vue";
 import UserConsultarCitas from "@/views/user/UserConsultarCitas.vue";
 // Admin Views
+import AdminHomeView from "@/views/admin/AdminHomeView.vue";
 import AdminConsultarCitas from "@/views/admin/AdminConsultarCitas.vue";
 import AdminAgendarCita from "@/views/admin/AdminAgendarCita.vue";
 //  Stores
@@ -20,11 +21,17 @@ const routes = [
     name: "home",
     path: "/",
     component: Home,
+    meta: {
+      requiresAdmin: false,
+    },
   },
   {
     name: "estetica",
     path: "/estetica",
     component: () => import("@/views/EsteticaView.vue"),
+    meta: {
+      requiresAdmin: false,
+    },
   },
   {
     name: "login",
@@ -42,6 +49,7 @@ const routes = [
     component: UserConsultarCitas,
     meta: {
       requiresAuth: true,
+      requiresAdmin: false,
     },
   },
   {
@@ -66,18 +74,24 @@ const routes = [
   {
     name: "admin",
     path: "/admin",
+    redirect: "adminHome",
     meta: {
       requiresAdmin: true,
       requiresAuth: true,
     },
     children: [
       {
-        name: "consultarCitas",
+        name: "adminHome",
+        path: "home",
+        component: AdminHomeView,
+      },
+      {
+        name: "adminConsultarCitas",
         path: "consultar-citas",
         component: AdminConsultarCitas,
       },
       {
-        name: "agendar",
+        name: "adminAgendar",
         path: "agendar-cita",
         component: AdminAgendarCita,
       },
@@ -118,10 +132,11 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
   const generalVariablesStore = useGeneralVariablesStore();
-  if (to.name == "home") generalVariablesStore.homePageNavbarColor = true;
+  if (to.name == "home" || to.name == "adminHome")
+    generalVariablesStore.homePageNavbarColor = true;
   else generalVariablesStore.homePageNavbarColor = false;
 
-  if (!to.meta.requiresAuth) {
+  if (!to.meta.requiresAuth && !userStore.isAdmin) {
     next();
     return;
   }
@@ -136,8 +151,15 @@ router.beforeEach((to, from, next) => {
         next({ name: "home" });
         return;
       }
+    } else {
+      // Checking if the route doesn't needs admin and if the user is not an admin, as admin users cannot access nonadmin routes
+      if (userStore.isAdmin) {
+        next({ name: "adminHome" });
+        return;
+      } else {
+        next();
+      }
     }
-    next();
   } else {
     next({ name: "home" });
   }

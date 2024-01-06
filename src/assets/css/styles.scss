@@ -669,6 +669,24 @@ img {
   background-color: #212121;
   overflow: hidden;
 }
+/* ANIMATIONS */
+.animated-loading-text {
+  color: var(--black-text-color);
+  animation: color-pulse 800ms linear infinite;
+}
+
+@keyframes color-pulse {
+  0% {
+    color: var(--black-text-color-100);
+    scale: 1;
+  }
+  60% {
+  } /* Slightly darker gray during pulse */
+  100% {
+    scale: 1.01;
+    color: var(--black-text-color);
+  }
+}
 
 // TODO - check classes and refactor
 
