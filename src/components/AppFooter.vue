@@ -2,26 +2,32 @@
   <footer class="text-center border-t-2 border-slate-600 py-10">
     <section class="flex flex-wrap items-center justify-center">
       <div class="logo-redes-container">
-        <router-link class="footer-logo" :to="{ name: 'home' }">
+        <router-link
+          class="footer-logo"
+          :to="{ name: 'home' }"
+          role="link"
+          aria-label="Dogbarber Estetica Canina"
+        >
           <img
             class="w-[70%] h-auto mb-4"
             src="@/assets/images/logo-footer.png"
+            alt="Dogbarber Estetica Canina"
           />
         </router-link>
         <p class="block w-full">Síguenos en:</p>
         <ul class="block w-full">
           <li>
-            <a href="#">
+            <a href="#" role="link" aria-label="Síguenos en nuestro Facebook">
               <svg><use href="/icons/icons.svg#facebook-logo" /></svg>
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="#" role="link" aria-label="Síguenos en nuestro Instagram">
               <svg><use href="/icons/icons.svg#instagram-logo" /></svg>
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="#" role="link" aria-label="Síguenos en nuestro TikTok">
               <svg><use href="/icons/icons.svg#tiktok-logo" /></svg>
             </a>
           </li>
@@ -49,6 +55,8 @@
                 class="p-text-footer"
                 :to="{ name: 'aboutUs' }"
                 text="Sobre DogBarber"
+                role="link"
+                aria-label="Sobre DogBarber"
               />
             </li>
             <li>
@@ -56,6 +64,8 @@
                 class="p-text-footer"
                 :to="{ name: 'aboutUs' }"
                 text="Blog"
+                role="link"
+                aria-label="Blog"
               />
             </li>
             <li>
@@ -63,6 +73,8 @@
                 class="p-text-footer"
                 :to="{ name: 'aboutUs' }"
                 text="Términos y condiciones"
+                role="link"
+                aria-label="Términos y Condiciones"
               />
             </li>
           </ul>
@@ -88,6 +100,8 @@
                 class="p-text-footer"
                 :to="{ name: 'aboutUs' }"
                 text="Preguntas frecuentes"
+                role="link"
+                aria-label="Preguntas Frecuentes"
               />
             </li>
             <li>
@@ -95,6 +109,8 @@
                 class="p-text-footer"
                 :to="{ name: 'aboutUs' }"
                 text="Política de Privacidad"
+                role="link"
+                aria-label="Política de Privacidad"
               />
             </li>
           </ul>
@@ -132,6 +148,8 @@
               class="p-text-footer"
               :to="{ name: 'aboutUs' }"
               text="Sobre DogBarber"
+              role="link"
+              aria-label="Sobre DogBarber"
             />
           </li>
           <li>
@@ -139,6 +157,8 @@
               class="p-text-footer"
               :to="{ name: 'aboutUs' }"
               text="Blog"
+              role="link"
+              aria-label="Blog"
             />
           </li>
           <li>
@@ -146,6 +166,8 @@
               class="p-text-footer"
               :to="{ name: 'aboutUs' }"
               text="Términos y condiciones"
+              role="link"
+              aria-label="Términos y Condiciones"
             />
           </li>
         </ul>
@@ -158,6 +180,8 @@
               class="p-text-footer"
               :to="{ name: 'aboutUs' }"
               text="Preguntas frecuentes"
+              role="link"
+              aria-label="Preguntas Frecuentes"
             />
           </li>
           <li>
@@ -165,6 +189,8 @@
               class="p-text-footer"
               :to="{ name: 'aboutUs' }"
               text="Política de Privacidad"
+              role="link"
+              aria-label="Política de Privacidad"
             />
           </li>
         </ul>

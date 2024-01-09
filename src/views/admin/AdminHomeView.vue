@@ -3,11 +3,13 @@
     <section class="main-section">
       <div class="hero-content">
         <h1>ADMIN VIEW</h1>
-        <p>
-          Con nuestros servicios de peluquería y estética canina que harán que
-          tu peludo se vea y se sienta genial!.
-        </p>
-        <router-link :to="{ name: 'estetica' }" class="btn-primary">
+        <router-link :to="{ name: 'adminAgendar' }" class="btn-primary">
+          <svg>
+            <use href="/icons/icons.svg#paw" />
+          </svg>
+          Citas de hoy
+        </router-link>
+        <router-link :to="{ name: 'adminAgendar' }" class="btn-primary">
           <svg>
             <use href="/icons/icons.svg#paw" />
           </svg>
@@ -73,7 +75,7 @@ h1 {
 .main-section {
   height: 100dvh;
   position: relative;
-  background-image: url(@/assets/images/main-background.webp);
+  //background-image: url(@/assets/images/main-background.webp);
   background-size: cover;
   background-position-x: 800px;
   padding: 60px 5% 40px;

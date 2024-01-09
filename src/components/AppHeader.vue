@@ -43,7 +43,10 @@
             />
           </li>
           <li>
-            <router-link to="/estetica" text="Agendar una cita" />
+            <router-link
+              :to="this.userStore.isAdmin ? '/admin/agendar-cita' : '/estetica'"
+              text="Agendar una cita"
+            />
           </li>
           <li v-if="!this.userStore.isAuth">
             <router-link

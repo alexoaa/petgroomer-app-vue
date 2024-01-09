@@ -24,6 +24,7 @@
                   v-model="nombreCliente"
                   id="nombreCliente"
                   autocomplete="off"
+                  aria-label="Nombre del cliente"
                   required
                 />
                 <span>Tu nombre *</span>

@@ -11,7 +11,12 @@
           Con nuestros servicios de peluquería y estética canina que harán que
           tu peludo se vea y se sienta genial!.
         </p>
-        <router-link :to="{ name: 'estetica' }" class="btn-primary">
+        <router-link
+          :to="{ name: 'estetica' }"
+          class="btn-primary"
+          role="link"
+          aria-label="Agendar una cita"
+        >
           <svg>
             <use href="/icons/icons.svg#paw" />
           </svg>
@@ -162,7 +167,12 @@
           ¡Mantén a tu mascota limpia y saludable con nuestro servicio de
           peluquería canina!
         </p>
-        <router-link :to="{ name: 'estetica' }" class="btn-terciary">
+        <router-link
+          :to="{ name: 'estetica' }"
+          class="btn-terciary"
+          role="link"
+          aria-label="Agendar una cita"
+        >
           <svg>
             <use href="/icons/icons.svg#paw" />
           </svg>
@@ -285,7 +295,11 @@
         <h1 class="service-description-title">¿Cómo funciona?</h1>
         <ul class="service-description-steps">
           <li ref="serviceStepOne">
-            <div @click.stop="serviceStepOneVisible = !serviceStepOneVisible">
+            <div
+              @click.stop="serviceStepOneVisible = !serviceStepOneVisible"
+              @keyup.enter.stop="serviceStepOneVisible = !serviceStepOneVisible"
+              tabindex="0"
+            >
               <h1 class="text-2xl"><span>Paso 1:</span> Agenda tu Cita</h1>
               <svg><use href="/icons/icons.svg#plus" /></svg>
             </div>
@@ -302,7 +316,11 @@
             </p>
           </li>
           <li ref="serviceStepTwo">
-            <div @click.stop="serviceStepTwoVisible = !serviceStepTwoVisible">
+            <div
+              @click.stop="serviceStepTwoVisible = !serviceStepTwoVisible"
+              @keyup.enter.stop="serviceStepTwoVisible = !serviceStepTwoVisible"
+              tabindex="0"
+            >
               <h1 class="text-2xl"><span>Paso 2:</span> Confirma tu Cita</h1>
               <svg><use href="/icons/icons.svg#plus" /></svg>
             </div>
@@ -315,6 +333,10 @@
           <li ref="serviceStepThree">
             <div
               @click.stop="serviceStepThreeVisible = !serviceStepThreeVisible"
+              @keyup.enter.stop="
+                serviceStepThreeVisible = !serviceStepThreeVisible
+              "
+              tabindex="0"
             >
               <h1 class="text-2xl"><span>Paso 3:</span> Día de la Cita</h1>
               <svg><use href="/icons/icons.svg#plus" /></svg>
@@ -328,7 +350,13 @@
             </p>
           </li>
           <li ref="serviceStepFour">
-            <div @click.stop="serviceStepFourVisible = !serviceStepFourVisible">
+            <div
+              @click.stop="serviceStepFourVisible = !serviceStepFourVisible"
+              @keyup.enter.stop="
+                serviceStepFourVisible = !serviceStepFourVisible
+              "
+              tabindex="0"
+            >
               <h1 class="text-2xl">
                 <span>Paso 4:</span> Recoge a tu Mascota y Programa tu Próxima
                 Cita
@@ -344,7 +372,13 @@
             </p>
           </li>
           <li ref="serviceStepFive">
-            <div @click.stop="serviceStepFiveVisible = !serviceStepFiveVisible">
+            <div
+              @click.stop="serviceStepFiveVisible = !serviceStepFiveVisible"
+              @keyup.enter.stop="
+                serviceStepFiveVisible = !serviceStepFiveVisible
+              "
+              tabindex="0"
+            >
               <h1 class="text-2xl step-five-share-exp">
                 <span>Paso 5:</span> !Comparte tu Experiencia!
                 <ul>
