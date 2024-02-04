@@ -285,6 +285,12 @@ img {
   }
 }
 
+.btn-disabled {
+  &:hover {
+    cursor: not-allowed;
+  }
+}
+
 /** STYLES FOR APPOINTMENT FORM */
 .form-container {
   display: flex;

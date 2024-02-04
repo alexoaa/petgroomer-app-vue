@@ -180,22 +180,18 @@
           ></ErrorMessage>
         </div>
         <!-- ToS -->
-        <div class="mb-3 pl-6 pt-2 w-full">
-          <vee-field
-            type="checkbox"
-            name="tos"
-            id="tos"
-            value="1"
-            class="w-4 h-4 float-left -ml-6 mt-1 rounded"
-          />
-          <label for="tos" class="inline-block cursor-pointer"
-            >Acepto los
+        <div class="py-3 w-full">
+          <label for="tos" class="inline-block cursor-pointer text-xs">
+            Al crear una cuenta, usted reconoce y acepta los
             <a href="#tos" class="text-[var(--accent-color)]"
-              >terminos del servicio.</a
-            ></label
-          >
+              >Términos de Dogbarber.</a
+            >
+            Además, reconoce nuestras
+            <a href="#tos" class="text-[var(--accent-color)]"
+              >Políticas de Privacidad.</a
+            >
+          </label>
         </div>
-        <ErrorMessage name="tos" class="text-[var(--red-color)]"></ErrorMessage>
 
         <!-- Register button -->
         <div class="submit-container">
@@ -204,6 +200,7 @@
             id="btnSignup"
             class="btn-primary"
             :disabled="userIsBeingRegistered"
+            :class="{ 'btn-disabled': userIsBeingRegistered }"
           >
             <span
               v-if="!userIsBeingRegistered"
@@ -253,7 +250,6 @@ export default {
         email: "required|email",
         password: "required|min:9|excluded:password",
         confirmPassword: "passwords_mismatch:@password",
-        tos: "tos",
       },
       responseError: "",
       userIsBeingRegistered: false,

@@ -82,6 +82,7 @@
             type="submit"
             class="btn-primary"
             :disabled="userIsBeingLoggedIn"
+            :class="{ 'btn-disabled': userIsBeingLoggedIn }"
           >
             <span
               v-if="!userIsBeingLoggedIn"
