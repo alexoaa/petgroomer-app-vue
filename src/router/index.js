@@ -117,6 +117,10 @@ const routeTitles = {
   "/recuperar-contrasena":
     "¿Olvidaste tu contraseña? | No puedes iniciar sesión",
   "/recover-password/confirm/${userId}/${token}": "Restablece tu Contraseña",
+  // Admin routes
+  "/admin/home": "DogBarber Admin",
+  "/admin/consultar-citas": "DogBarber Admin - Consultar citas",
+  "/admin/agendar-cita": "DogBarber Admin - Agendar una cita",
 };
 
 const router = createRouter({
@@ -132,9 +136,11 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore();
   const generalVariablesStore = useGeneralVariablesStore();
-  if (to.name == "home" || to.name == "adminHome")
-    generalVariablesStore.homePageNavbarColor = true;
+  // Gives style to the navbar depending if the user is in the home page or not
+  if (to.name == "home") generalVariablesStore.homePageNavbarColor = true;
   else generalVariablesStore.homePageNavbarColor = false;
+  if (from.name == "adminHome" && to.name == "home")
+    generalVariablesStore.homePageNavbarColor = false;
 
   if (!to.meta.requiresAuth && !userStore.isAdmin) {
     next();

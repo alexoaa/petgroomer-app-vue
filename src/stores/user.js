@@ -38,7 +38,7 @@ export const useUserStore = defineStore("user", {
         this.resetData();
       }
     },
-    resetData() {
+    async resetData() {
       this.userId = "";
       this.userName = "";
       this.userLastName = "";
@@ -49,6 +49,8 @@ export const useUserStore = defineStore("user", {
       this.isAdmin = false;
       this.isAuthenticating = false;
       localStorage.removeItem("isAuthenticated");
+      localStorage.removeItem("user");
+      document.cookie = "connect.sid=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
     },
     async login(values) {
       try {

@@ -94,8 +94,8 @@ export default {
   methods: {
     ...mapActions(useUserStore, ["logout"]),
 
-    closeSession() {
-      this.logout();
+    async closeSession() {
+      await this.logout();
       this.sidebarIsOpen = false;
       router.push("/");
     },

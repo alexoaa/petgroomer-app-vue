@@ -307,7 +307,24 @@
               <!-- Appointment time -->
               <div class="md:max-w-[50%] text-center">
                 <h2>{{ this.fechaCitaSpanish }}</h2>
-                <div class="time-schedule-container">
+                <div
+                  v-if="getScheduleRequestLoading"
+                  class="my-[50px] flex justify-center items-center flex-wrap"
+                >
+                  <video id="myVideo" autoplay loop>
+                    <source
+                      src="@/assets/icons/loading_paw.webm"
+                      type="video/webm"
+                    />
+                  </video>
+                  <p class="block w-full font-[700] animated-loading-text">
+                    Cargando los datos...
+                  </p>
+                </div>
+                <div
+                  v-show="!getScheduleRequestLoading"
+                  class="time-schedule-container"
+                >
                   <div class="time-schedule">
                     <ul>
                       <vee-field
@@ -438,6 +455,8 @@ export default {
       ConfirmationModalIsOpen: false,
       closeConfirmationButton: true,
       reloadPage: false,
+      // Loader
+      getScheduleRequestLoading: false,
       //
       agendarSchema: {
         nombreCliente: "required|alphaSpaces|min:3|max:100",
@@ -482,6 +501,10 @@ export default {
       this.horaCita = apptTimeInputChecked.value;
     },
     async datePicked(date) {
+      // reset previous values
+      this.horaCita = "";
+
+      this.getScheduleRequestLoading = true;
       this.fechaCita = date;
       date = date.split("/");
       date = `${date[2]}-${date[1]}-${date[0]}T00:00:00`;
@@ -502,6 +525,7 @@ export default {
       const availableHoursRequest = await this.getHourAvailability(
         this.fechaCita
       );
+
       if (availableHoursRequest.success)
         this.availableHours = availableHoursRequest.message;
       else {
@@ -509,6 +533,7 @@ export default {
         this.responseMessage = availableHoursRequest.message;
         this.ConfirmationModalIsOpen = true;
       }
+      this.getScheduleRequestLoading = false;
     },
     async newAppointment(values) {
       let appTime = "PM";
