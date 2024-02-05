@@ -1,19 +1,21 @@
 <template>
   <section class="flex flex-wrap justify-center pt-0">
     <section class="main-section">
-      <router-link :to="{ name: 'adminConsultarCitas' }" class="today-appt">
-        <div class="today-appt-info">
-          <span>{{ totalAppt }}</span>
-          <p>Total de citas de hoy</p>
-        </div>
-        <svg>
-          <use href="/icons/icons.svg#chevronRight" />
-        </svg>
-      </router-link>
-      <div class="today-appt today-appt-pend">
-        <div class="today-appt-info">
-          <span>{{ remainingAppt }}</span>
-          <p>Citas pendientes</p>
+      <div class="appt-dash">
+        <router-link :to="{ name: 'adminConsultarCitas' }" class="today-appt">
+          <div class="today-appt-info">
+            <span>{{ totalAppt }}</span>
+            <p>Total de citas de hoy</p>
+          </div>
+          <svg>
+            <use href="/icons/icons.svg#chevronRight" />
+          </svg>
+        </router-link>
+        <div class="today-appt today-appt-pend">
+          <div class="today-appt-info">
+            <span>{{ remainingAppt }}</span>
+            <p>Citas pendientes</p>
+          </div>
         </div>
       </div>
       <router-link :to="{ name: 'adminAgendar' }" class="btn-primary">
@@ -35,7 +37,7 @@
             Cargando los datos...
           </p>
         </div>
-        <div v-else>
+        <div v-else class="max-w-[850px]">
           <div v-if="isNoApptAlertActive">
             <p class="font-bold text-xl py-[20px]">
               {{ axiosResponseMessage }}
@@ -194,6 +196,8 @@ section {
     padding: 20px;
     display: flex;
     margin-bottom: 16px;
+    transition: all 300ms ease;
+
     .today-appt-info {
       width: 100%;
       display: flex;
@@ -262,7 +266,7 @@ section {
       margin: 10px 0;
       transition: all 300ms ease;
       &:hover {
-        background-color: var(--secondary-color-100);
+        box-shadow: 0 0 7px 4px var(--light-gray-color);
         cursor: pointer;
         .upcoming-appt-time {
           svg {
@@ -298,16 +302,24 @@ section {
 }
 
 @media screen and (min-width: 768px) {
+  .appt-dash {
+    width: 100%;
+    max-width: 670px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 20px;
+  }
+  .today-appt {
+    max-width: 325px !important;
+  }
   .btn-primary {
-    width: 400px !important;
+    width: 100% !important;
+    max-width: 670px !important;
   }
 }
 
 @media screen and (min-width: 1024px) {
   .main-section {
-    display: flex;
-    flex-wrap: wrap;
-
     .today-appt {
       &:hover:first-child {
         .today-appt-info {
@@ -324,10 +336,11 @@ section {
       }
     }
     .today-appt-pend {
-      margin-left: 50px;
     }
     .upcoming-appt {
       width: 100%;
+      max-width: 670px;
+
       h1 {
         font-size: 1.5rem;
         font-weight: bold;
@@ -346,8 +359,6 @@ section {
         margin: 10px 0;
         transition: all 300ms ease;
         &:hover {
-          background-color: var(--secondary-color-100);
-          cursor: pointer;
           .upcoming-appt-time {
             svg {
               stroke: var(--main-color);
@@ -355,13 +366,12 @@ section {
           }
         }
         .upcoming-appt-pet-info {
+          display: flex;
+          align-items: center;
           span {
-            font-weight: 600;
-            font-size: 1.2rem;
           }
           p {
-            font-size: 1rem;
-            font-weight: 500;
+            margin-left: 20px;
           }
         }
         .upcoming-appt-time {

@@ -37,7 +37,7 @@
       </div>
 
       <div class="block my-4">
-        <span class="font-bold text-[1.2rem]">¡Error!</span>
+        <span class="font-bold text-[1.2rem]">¡Ups!</span>
       </div>
     </div>
     <div class="block text-[1.1rem] pb-4">
